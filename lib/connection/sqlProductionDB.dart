@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:connect_to_sql_server_directly/connect_to_sql_server_directly.dart';
 import 'package:tivnqn/model/sqlT50InspectionData.dart';
+import 'package:tivnqn/model/sqlT58InlineData.dart';
 
 class SqlProductionDB {
   var connection = ConnectToSqlServerDirectly();
@@ -79,6 +80,72 @@ class SqlProductionDB {
       print('selectSqlT50InspectionData --> Exception : ' + e.toString());
     }
     print(' --> result.lenght : ' + result.length.toString());
+    return result;
+  }
+
+  Future<List<SqlT58InlineData>> selectT58InlineData(
+      int line, int range, bool sumAllProcess) async {
+    String query = '''
+    USE Production 
+    EXEC [dbo].[selectT58InlineData]
+    @line = ${line},
+    @range = ${range},
+    @sumAllProcess = ${sumAllProcess ? 1 : 0} 
+''';
+    List<SqlT58InlineData> result = [];
+    List<Map<String, dynamic>> tempResult = [];
+    print('Query SqlT58InlineData : $query  ');
+    try {
+      var rowData;
+      await connection.getRowsOfQueryResult(query).then((value) => {
+            if (value.runtimeType == String)
+              {print('=> ERROR ')}
+            else
+              {
+                tempResult = value.cast<Map<String, dynamic>>(),
+                for (var element in tempResult)
+                  {
+                    rowData = SqlT58InlineData.fromMap(element),
+                    result.add(rowData),
+                  }
+              }
+          });
+    } catch (e) {
+      print('SqlT58InlineData --> Exception : ' + e.toString());
+    }
+    print(' --> result.lenght : ' + result.length.toString());
+
+    return result;
+  }
+
+  Future<List<SqlT59TransInline>> selectSqlT59TransInline(int itemNo) async {
+    String query = '''USE Production 
+    EXEC [dbo].[selectT59TransInline]
+    @itemNo = ${itemNo}
+    ''';
+    List<SqlT59TransInline> result = [];
+    List<Map<String, dynamic>> tempResult = [];
+    print('Query selectSqlT59TransInline : $query  ');
+    try {
+      var rowData;
+      await connection.getRowsOfQueryResult(query).then((value) => {
+            if (value.runtimeType == String)
+              {print('=> ERROR ')}
+            else
+              {
+                tempResult = value.cast<Map<String, dynamic>>(),
+                for (var element in tempResult)
+                  {
+                    rowData = SqlT59TransInline.fromMap(element),
+                    result.add(rowData),
+                  }
+              }
+          });
+    } catch (e) {
+      print('SqlT59TransInline --> Exception : ' + e.toString());
+    }
+    print(' --> result.lenght : ' + result.length.toString());
+
     return result;
   }
 }

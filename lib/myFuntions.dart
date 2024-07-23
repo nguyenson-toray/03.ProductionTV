@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:tivnqn/global.dart';
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:tivnqn/model/sqlT58InlineData.dart';
 
 class MyFuntions {
   static int setLineFollowIP(String ip) {
@@ -481,7 +482,25 @@ class MyFuntions {
       g.sqlT50InspectionDataMonthlysSummaryAll = await g.sqlProductionDB
           .selectSqlT50InspectionData(0, g.rangeDays, g.timeTypes[2], 1);
     }
-    ;
+  }
+
+  static Future<void> selectTInlineData() async {
+    print('selectT58InlineData:');
+    List<SqlT58InlineData> sqlT58InlineDataDetailAllProcess = [];
+    late DateTime lastDate;
+    g.sqlT58InlineDataDailysSumProcess = await g.sqlProductionDB
+        .selectT58InlineData(g.currentLine, g.rangeDays, true);
+    lastDate = g.sqlT58InlineDataDailysSumProcess.last.getInspectionDate;
+    sqlT58InlineDataDetailAllProcess = await g.sqlProductionDB
+        .selectT58InlineData(g.currentLine, g.rangeDays, false);
+    g.sqlT58InlineDataDailysDetailProcess = sqlT58InlineDataDetailAllProcess;
+    g.sqlT58InlineDataLastDay = sqlT58InlineDataDetailAllProcess
+        .where((data) => data.inspectionDate == lastDate)
+        .toList();
+
+    g.curentItemNo = g.sqlT58InlineDataLastDay.last.getItemNo;
+    g.sqlT59TransInline =
+        await g.sqlProductionDB.selectSqlT59TransInline(g.curentItemNo);
   }
 
   static Future<void> sellectDataETS(String mo) async {

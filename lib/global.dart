@@ -15,6 +15,7 @@ import 'package:tivnqn/model/preparation/pDispatch.dart';
 import 'package:tivnqn/model/preparation/pInspectionFabric.dart';
 import 'package:tivnqn/model/preparation/pRelaxationfabricTable.dart';
 import 'package:tivnqn/model/sqlT50InspectionData.dart';
+import 'package:tivnqn/model/sqlT58InlineData.dart';
 import 'package:tivnqn/model/thongbao.dart';
 
 class g {
@@ -66,6 +67,11 @@ class g {
   static List<ChartDataPInspection> chartDataPInspection = [];
   static List<ChartDataPRelaxation> chartDataPRelaxation = [];
 
+  static int curentItemNo = 0;
+  static List<SqlT59TransInline> sqlT59TransInline = [];
+  static List<SqlT58InlineData> sqlT58InlineDataDailysSumProcess = [];
+  static List<SqlT58InlineData> sqlT58InlineDataDailysDetailProcess = [];
+  static List<SqlT58InlineData> sqlT58InlineDataLastDay = [];
   static List<SqlT50InspectionData> sqlT50InspectionDataDailys = [];
   static List<SqlT50InspectionData> sqlT50InspectionDataWeeklys = [];
   static List<SqlT50InspectionData> sqlT50InspectionDataMonthlys = [];

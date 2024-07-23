@@ -9,7 +9,7 @@ import 'package:tivnqn/global.dart';
 import 'package:tivnqn/myFuntions.dart';
 import 'package:tivnqn/ui/announcement.dart';
 import 'package:tivnqn/ui/dashboardETS.dart';
-import 'package:tivnqn/ui/inspectionDataChart.dart';
+import 'package:tivnqn/ui/inspectionEndLineDataChart.dart';
 
 class DashboardProduction extends StatefulWidget {
   const DashboardProduction({super.key});

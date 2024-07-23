@@ -12,6 +12,7 @@ import 'package:tivnqn/model/preparation/chartDataPInspection.dart';
 import 'package:tivnqn/model/preparation/chartDataPRelaxation.dart';
 import 'package:tivnqn/myFuntions.dart';
 import 'package:tivnqn/ui/announcement.dart';
+import 'package:tivnqn/ui/dashboardDataInline.dart';
 import 'package:tivnqn/ui/dashboardProduction.dart';
 import 'package:tivnqn/ui/dashboardImage.dart';
 import 'package:tivnqn/ui/dashboardPlanning.dart';
@@ -27,6 +28,7 @@ class InitialPgae extends StatefulWidget {
 }
 
 class _InitialPgaeState extends State<InitialPgae> {
+  bool isShowDataInline = true;
   bool isConnectedSqlAppTiqn = false;
   bool isLoading = true;
   String textLoading = "Load config !";
@@ -98,7 +100,7 @@ class _InitialPgaeState extends State<InitialPgae> {
     g.ip = (await NetworkInfo().getWifiIP())!;
     if (kDebugMode) {
       setState(() {
-        g.ip = '192.168.1.70';
+        g.ip = '192.168.1.71';
       });
     }
     isConnectedSqlAppTiqn = await g.sqlApp.initConnection();
@@ -204,6 +206,7 @@ class _InitialPgaeState extends State<InitialPgae> {
       case 'line12':
         {
           print('-------line--------');
+
           g.thongbao = await g.sqlApp.sellectThongBao();
           g.isTVLine = true;
           g.selectAllLine = false;
@@ -222,9 +225,15 @@ class _InitialPgaeState extends State<InitialPgae> {
             );
             break;
           }
-          MyFuntions.selectT50InspectionDataOneByOne(0)
-              .then((value) => goDashboardProductionNew()); //no summary
+          if (isShowDataInline) {
+            g.rangeDays = 30;
+            MyFuntions.selectTInlineData()
+                .then((value) => goToDashboardDataInline());
+          } else
+            MyFuntions.selectT50InspectionDataOneByOne(0)
+                .then((value) => goDashboardProductionNew()); //no summary
         }
+
         break;
       case 'control1':
         {
@@ -385,6 +394,13 @@ class _InitialPgaeState extends State<InitialPgae> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => DashboardProduction()),
+    );
+  }
+
+  Future<void> goToDashboardDataInline() async {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => DashboardDataInline()),
     );
   }
 
