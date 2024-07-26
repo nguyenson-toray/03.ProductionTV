@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 6.0.0+1
+version: 6.0.1+1
 
 environment:
   sdk: '>=3.0.2 <4.0.0'
@@ -59,7 +59,7 @@ dependencies:
   # quiver: ^3.2.1 
   # restart_app: ^1.2.1
   syncfusion_flutter_charts: ^23.1.44
-  syncfusion_flutter_datagrid: ^23.1.44 
+  syncfusion_flutter_datagrid: ^23.2.7 
   youtube_player_flutter_quill: ^8.2.2
   cron: ^0.6.0 
   # slide_digital_clock: ^1.0.3
@@ -67,6 +67,7 @@ dependencies:
   auto_size_text: ^3.0.0
   radio_group_v2: ^1.0.2
   syncfusion_flutter_core: ^23.2.7
+  text_scroll: ^0.2.0
 
   # flutter pub run change_app_package_name:main com.new.package.name
 

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -73,15 +72,15 @@ class _DashboardPlanningState extends State<DashboardPlanning> {
   void initData() {
     List<DateTime> endDates = [];
     List<DateTime> startDates = [];
-    g.sqlPlanning.forEach((element) {
+    for (var element in g.sqlPlanning) {
       endDates.add(element.getEndDate);
       startDates.add(element.getBeginDate);
-    });
+    }
     startDates.sort((a, b) => b.difference(b).inDays);
     endDates.sort((a, b) => a.difference(b).inDays);
     startChartDate = MyFuntions.findFirstDateOfTheMonth(startDates.first);
     endChartDate = MyFuntions.findLastDateOfTheMonth(endDates.last)
-        .add(Duration(days: 90));
+        .add(const Duration(days: 90));
     dayCount = endChartDate.difference(startChartDate).inDays + 1;
     maxScrollOffset = dayCount * offsetW;
   }
@@ -100,7 +99,7 @@ class _DashboardPlanningState extends State<DashboardPlanning> {
             padding: const EdgeInsets.all(2.0),
             child: Text(
               g.todayString,
-              style: TextStyle(
+              style: const TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
                   color: Colors.white),
@@ -141,9 +140,9 @@ class _DashboardPlanningState extends State<DashboardPlanning> {
               children: [
                 Column(
                   children: [
-                    Container(
+                    SizedBox(
                       height: cellHeaderH * 2,
-                      child: Text(
+                      child: const Text(
                         '''L
 I
 N
@@ -153,7 +152,7 @@ E''',
                       ),
                     ),
                     Container(
-                      padding: EdgeInsets.fromLTRB(2, 0, 2, 0),
+                      padding: const EdgeInsets.fromLTRB(2, 0, 2, 0),
                       height: cellEventH * 9,
                       width: 25,
                       child: ListView.builder(
@@ -169,7 +168,7 @@ E''',
                             height: cellEventH,
                             child: Text(
                               '${index + 1}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 25),
                             ),
                           );
@@ -182,7 +181,7 @@ E''',
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Container(
+                      SizedBox(
                         height: cellHeaderH * 2 + cellEventH * 9,
                         width: dayCount * cellW,
                         child: CustomScrollView(
@@ -197,7 +196,7 @@ E''',
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Container(
+                                    SizedBox(
                                         height: cellHeaderH * 2,
                                         width: dayCount * cellW,
                                         child: header()),
@@ -227,7 +226,7 @@ E''',
                       ),
                       Container(
                         alignment: Alignment.bottomCenter,
-                        child: Text(
+                        child: const Text(
                           'Use the LEFT - RIGHT arrow buttons on the remote to scroll.',
                           style: TextStyle(
                               fontSize: 8,
@@ -251,7 +250,7 @@ E''',
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Container(
+          SizedBox(
             height: cellHeaderH,
             width: dayCount * cellW,
             child: ListView.builder(
@@ -272,8 +271,8 @@ E''',
                               MyFuntions.findLastDateOfTheMonth(date).day,
                           height: cellHeaderH,
                           child: Text(
-                            '$header',
-                            style: TextStyle(
+                            header,
+                            style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold),
@@ -282,7 +281,7 @@ E''',
                       : Container();
                 }),
           ),
-          Container(
+          SizedBox(
             height: cellHeaderH,
             width: dayCount * cellW,
             child: ListView.builder(
@@ -308,7 +307,7 @@ E''',
                                     : Colors.lightBlue[100]),
                         child: Text(
                           '${date.day}',
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 8,
                               color: Colors.purple,
                               fontWeight: FontWeight.bold),
@@ -325,7 +324,7 @@ E''',
                         height: cellHeaderH,
                         child: Text(
                           '${date.day}',
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 10,
                               color: Colors.black,
                               fontWeight: FontWeight.normal),
@@ -354,10 +353,10 @@ E''',
     lineEvents =
         g.sqlPlanning.where((element) => element.getLine == line).toList();
     lineEvents.sort((a, b) => a.getBeginDate.difference(b.getBeginDate).inDays);
-    if (lineEvents.length > 0) {
+    if (lineEvents.isNotEmpty) {
       lineEvent = lineEvents.first;
     }
-    return Container(
+    return SizedBox(
         height: cellEventH,
         width: cellW * dayCount,
         child: ListView.builder(
@@ -377,11 +376,11 @@ E''',
               bool isFirstDateEvent =
                   lineEvent.getBeginDate.difference(date).inDays == 0;
               bool inEvent = date.isAfter(
-                      lineEvent.getBeginDate.subtract(Duration(days: 1))) &&
-                  date.isBefore(lineEvent.getEndDate.add(Duration(days: 1)));
+                      lineEvent.getBeginDate.subtract(const Duration(days: 1))) &&
+                  date.isBefore(lineEvent.getEndDate.add(const Duration(days: 1)));
               return inEvent && isFirstDateEvent
                   ? Container(
-                      padding: EdgeInsets.fromLTRB(0, 1, 0, 1),
+                      padding: const EdgeInsets.fromLTRB(0, 1, 0, 1),
                       decoration: BoxDecoration(
                           border: Border.all(color: Colors.black, width: 0.1),
                           color: Colors.white),
@@ -433,7 +432,7 @@ E''',
         ? Container(
             decoration: BoxDecoration(
                 color: Colors.amber[100],
-                borderRadius: BorderRadius.all(Radius.circular(8))),
+                borderRadius: const BorderRadius.all(Radius.circular(8))),
             alignment: Alignment.center,
             child: Text(contentStr),
           )

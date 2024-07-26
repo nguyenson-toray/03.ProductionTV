@@ -17,70 +17,70 @@ class SqlT50InspectionData {
   int qtyDefectGroupF;
   int qtyDefectGroupG;
   int qtyDefectGroupH;
-  get getLine => this.line;
+  get getLine => line;
 
   set setLine(line) => this.line = line;
 
-  get getTimeType => this.timeType;
+  get getTimeType => timeType;
 
   set setTimeType(timeType) => this.timeType = timeType;
 
-  get getInspectionType => this.inspectionType;
+  get getInspectionType => inspectionType;
 
   set setInspectionType(inspectionType) => this.inspectionType = inspectionType;
 
-  get getQty => this.qty;
+  get getQty => qty;
 
   set setQty(qty) => this.qty = qty;
 
-  get getQtyPass => this.qtyPass;
+  get getQtyPass => qtyPass;
 
   set setQtyPass(qtyPass) => this.qtyPass = qtyPass;
 
-  get getQtyNG => this.qtyNG;
+  get getQtyNG => qtyNG;
 
   set setQtyNG(qtyNG) => this.qtyNG = qtyNG;
 
-  get getRatioDefectAll => this.ratioDefectAll;
+  get getRatioDefectAll => ratioDefectAll;
 
   set setRatioDefectAll(ratioDefectAll) => this.ratioDefectAll = ratioDefectAll;
 
-  get getQtyDefectGroupA => this.qtyDefectGroupA;
+  get getQtyDefectGroupA => qtyDefectGroupA;
 
   set setQtyDefectGroupA(qtyDefectGroupA) =>
       this.qtyDefectGroupA = qtyDefectGroupA;
 
-  get getQtyDefectGroupB => this.qtyDefectGroupB;
+  get getQtyDefectGroupB => qtyDefectGroupB;
 
   set setQtyDefectGroupB(qtyDefectGroupB) =>
       this.qtyDefectGroupB = qtyDefectGroupB;
 
-  get getQtyDefectGroupC => this.qtyDefectGroupC;
+  get getQtyDefectGroupC => qtyDefectGroupC;
 
   set setQtyDefectGroupC(qtyDefectGroupC) =>
       this.qtyDefectGroupC = qtyDefectGroupC;
 
-  get getQtyDefectGroupD => this.qtyDefectGroupD;
+  get getQtyDefectGroupD => qtyDefectGroupD;
 
   set setQtyDefectGroupD(qtyDefectGroupD) =>
       this.qtyDefectGroupD = qtyDefectGroupD;
 
-  get getQtyDefectGroupE => this.qtyDefectGroupE;
+  get getQtyDefectGroupE => qtyDefectGroupE;
 
   set setQtyDefectGroupE(qtyDefectGroupE) =>
       this.qtyDefectGroupE = qtyDefectGroupE;
 
-  get getQtyDefectGroupF => this.qtyDefectGroupF;
+  get getQtyDefectGroupF => qtyDefectGroupF;
 
   set setQtyDefectGroupF(qtyDefectGroupF) =>
       this.qtyDefectGroupF = qtyDefectGroupF;
 
-  get getQtyDefectGroupG => this.qtyDefectGroupG;
+  get getQtyDefectGroupG => qtyDefectGroupG;
 
   set setQtyDefectGroupG(qtyDefectGroupG) =>
       this.qtyDefectGroupG = qtyDefectGroupG;
 
-  get getQtyDefectGroupH => this.qtyDefectGroupH;
+  get getQtyDefectGroupH => qtyDefectGroupH;
 
   set setQtyDefectGroupH(qtyDefectGroupH) =>
       this.qtyDefectGroupH = qtyDefectGroupH;
@@ -133,7 +133,7 @@ class SqlT50InspectionData {
       qtyNG: map['qtyPass'] == null ? 0 : map['qtyNG'] as int,
       ratioDefectAll: map['ratioDefectAll'] == null
           ? 0
-          : double.parse(map['ratioDefectAll'].toString()) as double,
+          : double.parse(map['ratioDefectAll'].toString()),
       qtyDefectGroupA:
           map['qtyDefectGroupA'] == null ? 0 : map['qtyDefectGroupA'] as int,
       qtyDefectGroupB:

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:tivnqn/model/sqlT50InspectionData.dart';
 import 'package:tivnqn/model/sqlT58InlineData.dart';
 
 class InspectionInLineDataChart {
@@ -33,23 +32,24 @@ class InspectionInLineDataChart {
             labelFormat: '{value}%',
             minimum: 0,
             maximum: 30,
-            labelIntersectAction: AxisLabelIntersectAction.rotate45
-            // interval: 10
-            )
+            labelStyle: const TextStyle(fontSize: 12),
+            interval: 5)
       ],
       primaryXAxis: CategoryAxis(
-        labelStyle: TextStyle(fontSize: 10),
+        labelStyle: const TextStyle(fontSize: 10),
         interval: 1.0,
         majorGridLines: const MajorGridLines(width: 0),
       ),
       primaryYAxis: NumericAxis(
-        majorGridLines: const MajorGridLines(width: 0),
-        opposedPosition: false,
-        minimum: 0,
-        // maximum: 150,
-        // interval: 50,
-        // labelFormat: '{value}Pcs',
-      ),
+          majorGridLines: const MajorGridLines(width: 0),
+          opposedPosition: false,
+          minimum: 0,
+          labelStyle: const TextStyle(fontSize: 12),
+          interval: 5
+          // maximum: 150,
+          // interval: 50,
+          // labelFormat: '{value}Pcs',
+          ),
       series: getSeriesInlineDataByProcessLastDay(dataInput),
       tooltipBehavior: TooltipBehavior(enable: true),
     );
@@ -110,16 +110,16 @@ class InspectionInLineDataChart {
             )
       ],
       primaryXAxis: CategoryAxis(
-        labelStyle: TextStyle(fontSize: 10),
+        labelStyle: const TextStyle(fontSize: 10),
         interval: 1.0,
-        labelRotation: -45,
+        labelRotation: 0, //-45,
         majorGridLines: const MajorGridLines(width: 0),
       ),
       primaryYAxis: NumericAxis(
         majorGridLines: const MajorGridLines(width: 0),
         opposedPosition: false,
         minimum: 0,
-
+        labelStyle: const TextStyle(fontSize: 12),
         // maximum: 150,
         // interval: 50,
         // labelFormat: '{value}Pcs',
@@ -223,9 +223,9 @@ class InspectionInLineDataChart {
         )
       ],
       primaryXAxis: CategoryAxis(
-          labelStyle: TextStyle(fontSize: 10),
+          labelStyle: const TextStyle(fontSize: 10),
           interval: 1.0,
-          labelRotation: -45,
+          labelRotation: 0, // -45,
           majorGridLines: const MajorGridLines(width: 0),
           labelIntersectAction: AxisLabelIntersectAction.rotate45),
       primaryYAxis: NumericAxis(

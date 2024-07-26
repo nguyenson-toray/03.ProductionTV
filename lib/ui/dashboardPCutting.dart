@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:tivnqn/global.dart';
@@ -43,10 +42,10 @@ class _DashboardPCuttingState extends State<DashboardPCutting> {
 
   Future<void> refreshData() async {
     var temp = await g.sqlApp.sellectPCutting();
-    if (temp.length != 0) {
+    if (temp.isNotEmpty) {
       g.pCuttings = temp;
       g.chartDataPCuttings.clear();
-      g.pCuttings.forEach((element) {
+      for (var element in g.pCuttings) {
         var a = element.planQty as num;
         var b = element.actualQty as num;
         ChartDataPCutting temp = ChartDataPCutting(
@@ -60,7 +59,7 @@ class _DashboardPCuttingState extends State<DashboardPCutting> {
               updatedDataIndexes: List<int>.generate(
                   g.chartDataPCuttings.length, (i) => i + 1));
         });
-      });
+      }
     }
   }
 
@@ -69,13 +68,13 @@ class _DashboardPCuttingState extends State<DashboardPCutting> {
     return g.chartDataPCuttings.isEmpty
         ? MyFuntions.noData()
         : Container(
-            padding: EdgeInsets.fromLTRB(0, 0, 8, 0),
+            padding: const EdgeInsets.fromLTRB(0, 0, 8, 0),
             child: SfCartesianChart(
                 // title: ChartTitle(text: 'CUTTING'),
                 legend: myLegend,
                 primaryXAxis: CategoryAxis(
                   labelPosition: ChartDataLabelPosition.inside,
-                  labelStyle: TextStyle(
+                  labelStyle: const TextStyle(
                     // fontSize: 13,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,

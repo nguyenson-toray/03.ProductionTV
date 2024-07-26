@@ -6,19 +6,19 @@ class EtsMoInfo {
   String style;
   int qty;
   String desc;
-  get getMo => this.mo;
+  get getMo => mo;
 
   set setMo(mo) => this.mo = mo;
 
-  get getStyle => this.style;
+  get getStyle => style;
 
   set setStyle(style) => this.style = style;
 
-  get getQty => this.qty;
+  get getQty => qty;
 
   set setQty(qty) => this.qty = qty;
 
-  get getDesc => this.desc;
+  get getDesc => desc;
 
   set setDesc(desc) => this.desc = desc;
   EtsMoInfo({

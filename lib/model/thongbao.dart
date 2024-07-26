@@ -10,31 +10,31 @@ class ThongBao {
   DateTime thoigian1;
   DateTime thoigian2;
   DateTime thoigian3;
-  get getOnOff => this.onOff;
+  get getOnOff => onOff;
 
   set setOnOff(onOff) => this.onOff = onOff;
 
-  get getTieude => this.tieude;
+  get getTieude => tieude;
 
   set setTieude(tieude) => this.tieude = tieude;
 
-  get getNoidung => this.noidung;
+  get getNoidung => noidung;
 
   set setNoidung(noidung) => this.noidung = noidung;
 
-  get getThoiluongPhut => this.thoiluongPhut;
+  get getThoiluongPhut => thoiluongPhut;
 
   set setThoiluongPhut(thoiluongPhut) => this.thoiluongPhut = thoiluongPhut;
 
-  get getThoigian1 => this.thoigian1;
+  get getThoigian1 => thoigian1;
 
   set setThoigian1(thoigian1) => this.thoigian1 = thoigian1;
 
-  get getThoigian2 => this.thoigian2;
+  get getThoigian2 => thoigian2;
 
   set setThoigian2(thoigian2) => this.thoigian2 = thoigian2;
 
-  get getThoigian3 => this.thoigian3;
+  get getThoigian3 => thoigian3;
 
   set setThoigian3(thoigian3) => this.thoigian3 = thoigian3;
   ThongBao({
@@ -66,11 +66,11 @@ class ThongBao {
       noidung: map['noidung'] as String,
       thoiluongPhut: map['thoiluongPhut'] as int,
       thoigian1:
-          DateTime.parse(g.todayString + " " + map['thoigian1']) as DateTime,
+          DateTime.parse("${g.todayString} " + map['thoigian1']),
       thoigian2:
-          DateTime.parse(g.todayString + " " + map['thoigian2']) as DateTime,
+          DateTime.parse("${g.todayString} " + map['thoigian2']),
       thoigian3:
-          DateTime.parse(g.todayString + " " + map['thoigian3']) as DateTime,
+          DateTime.parse("${g.todayString} " + map['thoigian3']),
     );
   }
 

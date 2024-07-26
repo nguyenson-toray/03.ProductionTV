@@ -16,27 +16,27 @@ class EtsMoQty {
     required this.ZDCode,
     required this.QtyCommulative,
   });
-  get getGxNo => this.GxNo;
+  get getGxNo => GxNo;
 
   set setGxNo(GxNo) => this.GxNo = GxNo;
 
-  get getGxCode => this.GxCode;
+  get getGxCode => GxCode;
 
   set setGxCode(GxCode) => this.GxCode = GxCode;
 
-  get getGxName => this.gxName;
+  get getGxName => gxName;
 
   set setGxName(gxName) => this.gxName = gxName;
 
-  get getQtyToday => this.QtyToday;
+  get getQtyToday => QtyToday;
 
   set setQtyToday(QtyToday) => this.QtyToday = QtyToday;
 
-  get getZDCode => this.ZDCode;
+  get getZDCode => ZDCode;
 
   set setZDCode(ZDCode) => this.ZDCode = ZDCode;
 
-  get getQtyCommulative => this.QtyCommulative;
+  get getQtyCommulative => QtyCommulative;
 
   set setQtyCommulative(QtyCommulative) => this.QtyCommulative = QtyCommulative;
 

@@ -18,35 +18,35 @@ class Planning {
     required this.endDate,
     required this.comment,
   });
-  get getLine => this.line;
+  get getLine => line;
 
   set setLine(line) => this.line = line;
 
-  get getBrand => this.brand;
+  get getBrand => brand;
 
-  set setBrand(band) => this.brand = band;
+  set setBrand(band) => brand = band;
 
-  get getStyle => this.style;
+  get getStyle => style;
 
   set setStyle(style) => this.style = style;
 
-  get getDesc => this.desc;
+  get getDesc => desc;
 
   set setDesc(desc) => this.desc = desc;
 
-  get getQuantity => this.quantity;
+  get getQuantity => quantity;
 
   set setQuantity(quantity) => this.quantity = quantity;
 
-  get getBeginDate => this.beginDate;
+  get getBeginDate => beginDate;
 
   set setBeginDate(beginDate) => this.beginDate = beginDate;
 
-  get getEndDate => this.endDate;
+  get getEndDate => endDate;
 
   set setEndDate(endDate) => this.endDate = endDate;
 
-  get getComment => this.comment;
+  get getComment => comment;
 
   set setComment(comment) => this.comment = comment;
 

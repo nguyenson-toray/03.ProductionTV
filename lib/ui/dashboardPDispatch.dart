@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:tivnqn/global.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
@@ -30,7 +29,7 @@ class _DashboardPDispatchState extends State<DashboardPDispatch> {
 
   Future<void> refreshData() async {
     var temp = await g.sqlApp.sellectPDispatch();
-    if (temp.length > 0) {
+    if (temp.isNotEmpty) {
       setState(() {
         g.pDispatchs = temp;
         pDispatchDataSource = PDispatchDataSource(pDispatch: g.pDispatchs);
@@ -48,33 +47,33 @@ class _DashboardPDispatchState extends State<DashboardPDispatch> {
                 width: g.screenWidth / 15 - 18,
                 label: Container(
                     color: Colors.blue[200],
-                    padding: EdgeInsets.all(5.0),
+                    padding: const EdgeInsets.all(5.0),
                     alignment: Alignment.centerLeft,
                     child: Text(
                       'line'.toUpperCase(),
                       style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                          const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ))),
             GridColumn(
                 columnName: 'brand',
                 width: g.screenWidth / 15 * 2,
                 label: Container(
                     color: Colors.blue[200],
-                    padding: EdgeInsets.all(5.0),
+                    padding: const EdgeInsets.all(5.0),
                     alignment: Alignment.centerLeft,
                     child: Text(
                       'brand'.toUpperCase(),
                       style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                          const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ))),
             GridColumn(
                 columnName: 'styleNo',
                 width: g.screenWidth / 6,
                 label: Container(
                     color: Colors.blue[200],
-                    padding: EdgeInsets.all(5.0),
+                    padding: const EdgeInsets.all(5.0),
                     alignment: Alignment.centerLeft,
-                    child: Text(
+                    child: const Text(
                       'Style No',
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
@@ -84,9 +83,9 @@ class _DashboardPDispatchState extends State<DashboardPDispatch> {
                 width: g.screenWidth / 15,
                 label: Container(
                     color: Colors.blue[200],
-                    padding: EdgeInsets.all(5.0),
+                    padding: const EdgeInsets.all(5.0),
                     alignment: Alignment.centerLeft,
-                    child: Text(
+                    child: const Text(
                       'Order Qty',
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
@@ -96,9 +95,9 @@ class _DashboardPDispatchState extends State<DashboardPDispatch> {
                 width: g.screenWidth / 6,
                 label: Container(
                     color: Colors.blue[200],
-                    padding: EdgeInsets.all(5.0),
+                    padding: const EdgeInsets.all(5.0),
                     alignment: Alignment.centerLeft,
-                    child: Text(
+                    child: const Text(
                       'Color',
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
@@ -108,9 +107,9 @@ class _DashboardPDispatchState extends State<DashboardPDispatch> {
                 width: g.screenWidth / 10,
                 label: Container(
                     color: Colors.blue[200],
-                    padding: EdgeInsets.all(5.0),
+                    padding: const EdgeInsets.all(5.0),
                     alignment: Alignment.centerLeft,
-                    child: Text(
+                    child: const Text(
                       'Size #1',
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
@@ -120,9 +119,9 @@ class _DashboardPDispatchState extends State<DashboardPDispatch> {
                 width: g.screenWidth / 10,
                 label: Container(
                     color: Colors.blue[200],
-                    padding: EdgeInsets.all(5.0),
+                    padding: const EdgeInsets.all(5.0),
                     alignment: Alignment.centerLeft,
-                    child: Text(
+                    child: const Text(
                       'Size #2',
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
@@ -132,9 +131,9 @@ class _DashboardPDispatchState extends State<DashboardPDispatch> {
                 width: g.screenWidth / 10,
                 label: Container(
                     color: Colors.blue[200],
-                    padding: EdgeInsets.all(5.0),
+                    padding: const EdgeInsets.all(5.0),
                     alignment: Alignment.centerLeft,
-                    child: Text(
+                    child: const Text(
                       'Size #3',
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
@@ -144,9 +143,9 @@ class _DashboardPDispatchState extends State<DashboardPDispatch> {
                 width: g.screenWidth / 15 * 1.5 + 18,
                 label: Container(
                     color: Colors.blue[200],
-                    padding: EdgeInsets.all(5.0),
+                    padding: const EdgeInsets.all(5.0),
                     alignment: Alignment.centerLeft,
-                    child: Text(
+                    child: const Text(
                       'Dispatched %',
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.bold),

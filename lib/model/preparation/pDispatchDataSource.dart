@@ -50,10 +50,10 @@ class PDispatchDataSource extends DataGridSource {
                 ? Colors.blue[50]
                 : Colors.white,
             alignment: Alignment.centerLeft,
-            padding: EdgeInsets.all(5.0),
+            padding: const EdgeInsets.all(5.0),
             child: Text(
               dataGridCell.value.toString(),
-              style: TextStyle(fontSize: 17),
+              style: const TextStyle(fontSize: 17),
             ),
           );
         }).toList());

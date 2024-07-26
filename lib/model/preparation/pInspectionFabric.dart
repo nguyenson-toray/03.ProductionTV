@@ -41,7 +41,7 @@ class PInspectionFabric {
     return PInspectionFabric(
       id: map['id'] != null ? map['id'] as int : null,
       date:
-          map['date'] != null ? DateTime.parse(map['date']) as DateTime : null,
+          map['date'] != null ? DateTime.parse(map['date']) : null,
       kindOfFabric:
           map['kindOfFabric'] != null ? map['kindOfFabric'] as String : null,
       customer: map['customer'] != null ? map['customer'] as String : null,

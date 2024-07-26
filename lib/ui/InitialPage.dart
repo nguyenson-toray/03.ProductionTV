@@ -1,15 +1,12 @@
-import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:network_info_plus/network_info_plus.dart';
 import 'package:tivnqn/global.dart';
 import 'package:cron/cron.dart';
-import 'package:intl/intl.dart';
 import 'dart:async';
 import 'package:flu_wake_lock/flu_wake_lock.dart';
 import 'package:tivnqn/model/preparation/.chartDataPCutting.dart';
 import 'package:tivnqn/model/preparation/chartDataPInspection.dart';
-import 'package:tivnqn/model/preparation/chartDataPRelaxation.dart';
 import 'package:tivnqn/myFuntions.dart';
 import 'package:tivnqn/ui/announcement.dart';
 import 'package:tivnqn/ui/dashboardDataInline.dart';
@@ -34,7 +31,7 @@ class _InitialPgaeState extends State<InitialPgae> {
   String textLoading = "Load config !";
   FluWakeLock fluWakeLock = FluWakeLock();
   late YoutubePlayerController controller;
-  var cron = new Cron();
+  var cron = Cron();
   bool isPlaying = false;
   bool isPlayed = false;
   String linkDoExercise =
@@ -44,7 +41,7 @@ class _InitialPgaeState extends State<InitialPgae> {
   bool playerIsReady = false;
   late DateTime exceriseBegin;
   late DateTime currentTime;
-  Duration seekTime = Duration(milliseconds: 0);
+  Duration seekTime = const Duration(milliseconds: 0);
   late int hour;
   late int minute;
   String hourString = "07";
@@ -66,7 +63,7 @@ class _InitialPgaeState extends State<InitialPgae> {
     videoID = YoutubePlayer.convertUrlToId(linkDoExercise)!;
     controller = YoutubePlayerController(
       initialVideoId: videoID,
-      flags: YoutubePlayerFlags(
+      flags: const YoutubePlayerFlags(
         hideControls: true,
         loop: false,
         mute: kDebugMode ? false : true,
@@ -107,17 +104,17 @@ class _InitialPgaeState extends State<InitialPgae> {
     isLoading = false;
     if (isConnectedSqlAppTiqn) {
       g.configs = await g.sqlApp.sellectConfigs();
-      g.configs.forEach((element) {
+      for (var element in g.configs) {
         if (g.ip == element.getIp) {
           g.config = element;
           imgLinkOrg = element.getImageLink;
         }
-      });
+      }
       setState(() {
         isLoading = false;
         textLoading = '';
-        exceriseBegin = DateTime.parse("${g.todayString} " + "07:45:00");
-        print('exceriseBegin :' + exceriseBegin.toString());
+        exceriseBegin = DateTime.parse("${g.todayString} " "07:45:00");
+        print('exceriseBegin :$exceriseBegin');
         if (g.config.getDoExercise == 0 ||
             DateTime.now().isAfter(exceriseBegin)) {
           Future.delayed(const Duration(milliseconds: 200)).then((val) {
@@ -126,7 +123,7 @@ class _InitialPgaeState extends State<InitialPgae> {
           });
         } else {
           showVideo = true;
-          Timer.periodic(Duration(milliseconds: 200), (timer) {
+          Timer.periodic(const Duration(milliseconds: 200), (timer) {
             if (!isPlaying && playerIsReady) checkAndPlay();
             if (isPlaying) {
               timer.cancel();
@@ -154,7 +151,7 @@ class _InitialPgaeState extends State<InitialPgae> {
                   controller: controller,
                   showVideoProgressIndicator: true,
                   progressIndicatorColor: Colors.amber,
-                  progressColors: ProgressBarColors(
+                  progressColors: const ProgressBarColors(
                     playedColor: Colors.amber,
                     handleColor: Colors.tealAccent,
                   ),
@@ -162,10 +159,11 @@ class _InitialPgaeState extends State<InitialPgae> {
                     print('Player is ready.');
                     if (DateTime.now().isAfter(exceriseBegin)) {
                       loadDataGoToNextPage();
-                    } else
+                    } else {
                       setState(() {
                         playerIsReady = true;
                       });
+                    }
                   },
                   onEnded: (metaData) {
                     setState(() {
@@ -221,17 +219,20 @@ class _InitialPgaeState extends State<InitialPgae> {
           if (g.config.getAnnouncementOnly == 1) {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => Announcement()),
+              MaterialPageRoute(builder: (context) => const Announcement()),
             );
             break;
           }
           if (isShowDataInline) {
-            g.rangeDays = 30;
+            g.sqlT50InspectionDataDailys = await g.sqlProductionDB
+                .selectSqlT50InspectionData(
+                    g.currentLine, g.rangeDays, g.timeTypes[0], 0);
             MyFuntions.selectTInlineData()
                 .then((value) => goToDashboardDataInline());
-          } else
+          } else {
             MyFuntions.selectT50InspectionDataOneByOne(0)
                 .then((value) => goDashboardProductionNew()); //no summary
+          }
         }
 
         break;
@@ -268,12 +269,12 @@ class _InitialPgaeState extends State<InitialPgae> {
               .first
               .getSection;
 
-          g.configs.forEach((element) {
+          for (var element in g.configs) {
             if (element.getEtsMO != 'no') {
               g.lineETS.add(int.parse(section.split('line').last));
               g.etsMOs.add(element.getEtsMO);
             }
-          });
+          }
           g.currentMo = g.etsMOs.first;
           g.currentLine = g.lineETS.first;
           await MyFuntions.sellectDataETS(g.currentMo);
@@ -290,7 +291,7 @@ class _InitialPgaeState extends State<InitialPgae> {
           g.pRelaxationFabricTables =
               await g.sqlApp.sellectPRelaxationFabricTable();
 
-          g.pInspectionFabrics.forEach((element) {
+          for (var element in g.pInspectionFabrics) {
             var a = element.planQty as num;
             var b = element.actualQty as num;
             ChartDataPInspection temp = ChartDataPInspection(
@@ -299,7 +300,7 @@ class _InitialPgaeState extends State<InitialPgae> {
                 actual: element.actualQty as num,
                 remain: a - b);
             g.chartDataPInspection.add(temp);
-          });
+          }
 
           goToPreparation();
         }
@@ -308,7 +309,7 @@ class _InitialPgaeState extends State<InitialPgae> {
         {
           g.title = 'CUTTING';
           g.pCuttings = await g.sqlApp.sellectPCutting();
-          g.pCuttings.forEach((element) {
+          for (var element in g.pCuttings) {
             var a = element.planQty as num;
             var b = element.actualQty as num;
             ChartDataPCutting temp = ChartDataPCutting(
@@ -317,7 +318,7 @@ class _InitialPgaeState extends State<InitialPgae> {
                 actual: element.actualQty as num,
                 remain: a - b);
             g.chartDataPCuttings.add(temp);
-          });
+          }
           goToPreparation();
         }
         break;
@@ -351,7 +352,7 @@ class _InitialPgaeState extends State<InitialPgae> {
             // Loader.hide();
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => DashboardPlanning()),
+              MaterialPageRoute(builder: (context) => const DashboardPlanning()),
             );
           }
         }
@@ -375,7 +376,7 @@ class _InitialPgaeState extends State<InitialPgae> {
     print("------------------> goToPreparation");
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => DashboardPreparation()),
+      MaterialPageRoute(builder: (context) => const DashboardPreparation()),
     );
   }
 
@@ -393,14 +394,14 @@ class _InitialPgaeState extends State<InitialPgae> {
   Future<void> goDashboardProductionNew() async {
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => DashboardProduction()),
+      MaterialPageRoute(builder: (context) => const DashboardProduction()),
     );
   }
 
   Future<void> goToDashboardDataInline() async {
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => DashboardDataInline()),
+      MaterialPageRoute(builder: (context) => const DashboardDataInline()),
     );
   }
 
@@ -409,7 +410,7 @@ class _InitialPgaeState extends State<InitialPgae> {
     await MyFuntions.sellectDataETS(g.currentMo);
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => DashboardETS()),
+      MaterialPageRoute(builder: (context) => const DashboardETS()),
     );
   }
 }

@@ -53,16 +53,16 @@ class SqlProductionDB {
     String query = '''
     USE Production 
     EXEC [dbo].[selectT50InspectionData]
-    @line = ${line},
-    @range = ${range},
-    @timeType = '${timeType}',
-    @summary = ${summary}
+    @line = $line,
+    @range = $range,
+    @timeType = '$timeType',
+    @summary = $summary
 ''';
     List<SqlT50InspectionData> result = [];
     List<Map<String, dynamic>> tempResult = [];
     print('Query selectSqlT50InspectionData : $query  ');
     try {
-      var rowData;
+      SqlT50InspectionData rowData;
       await connection.getRowsOfQueryResult(query).then((value) => {
             if (value.runtimeType == String)
               {print('=> ERROR ')}
@@ -77,9 +77,9 @@ class SqlProductionDB {
               }
           });
     } catch (e) {
-      print('selectSqlT50InspectionData --> Exception : ' + e.toString());
+      print('selectSqlT50InspectionData --> Exception : $e');
     }
-    print(' --> result.lenght : ' + result.length.toString());
+    print(' --> result.lenght : ${result.length}');
     return result;
   }
 
@@ -87,16 +87,16 @@ class SqlProductionDB {
       int line, int range, bool sumAllProcess) async {
     String query = '''
     USE Production 
-    EXEC [dbo].[selectT58InlineData]
-    @line = ${line},
-    @range = ${range},
+    EXEC [dbo].[selectT58InlineDataDetail]
+    @line = $line,
+    @range = $range,
     @sumAllProcess = ${sumAllProcess ? 1 : 0} 
 ''';
     List<SqlT58InlineData> result = [];
     List<Map<String, dynamic>> tempResult = [];
     print('Query SqlT58InlineData : $query  ');
     try {
-      var rowData;
+      SqlT58InlineData rowData;
       await connection.getRowsOfQueryResult(query).then((value) => {
             if (value.runtimeType == String)
               {print('=> ERROR ')}
@@ -111,9 +111,9 @@ class SqlProductionDB {
               }
           });
     } catch (e) {
-      print('SqlT58InlineData --> Exception : ' + e.toString());
+      print('SqlT58InlineData --> Exception : $e');
     }
-    print(' --> result.lenght : ' + result.length.toString());
+    print(' --> result.lenght : ${result.length}');
 
     return result;
   }
@@ -121,13 +121,13 @@ class SqlProductionDB {
   Future<List<SqlT59TransInline>> selectSqlT59TransInline(int itemNo) async {
     String query = '''USE Production 
     EXEC [dbo].[selectT59TransInline]
-    @itemNo = ${itemNo}
+    @itemNo = $itemNo
     ''';
     List<SqlT59TransInline> result = [];
     List<Map<String, dynamic>> tempResult = [];
     print('Query selectSqlT59TransInline : $query  ');
     try {
-      var rowData;
+      SqlT59TransInline rowData;
       await connection.getRowsOfQueryResult(query).then((value) => {
             if (value.runtimeType == String)
               {print('=> ERROR ')}
@@ -142,9 +142,9 @@ class SqlProductionDB {
               }
           });
     } catch (e) {
-      print('SqlT59TransInline --> Exception : ' + e.toString());
+      print('SqlT59TransInline --> Exception : $e');
     }
-    print(' --> result.lenght : ' + result.length.toString());
+    print(' --> result.lenght : ${result.length}');
 
     return result;
   }

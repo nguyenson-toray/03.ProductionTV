@@ -46,7 +46,7 @@ class SqlEtsDB {
     String query = '''
 USE ETSDB_TI
 EXEC [1_GetMOInfo]
-@mo='${mo}'
+@mo='$mo'
 ''';
     EtsMoInfo result =
         EtsMoInfo(mo: 'ZDCODE', style: 'STYLE_NO', qty: 0, desc: 'XM');
@@ -63,9 +63,9 @@ EXEC [1_GetMOInfo]
               }
           });
     } catch (e) {
-      print('selectEtsMoInfo ${mo} --> Exception : ' + e.toString());
+      print('selectEtsMoInfo $mo --> Exception : $e');
     }
-    print(' --> result : ' + result.toString());
+    print(' --> result : $result');
     return result;
   }
 
@@ -73,14 +73,14 @@ EXEC [1_GetMOInfo]
     String query = '''
 USE ETSDB_TI
 EXEC [1_GetMOQty]
-@mo='${mo}'
+@mo='$mo'
 ''';
 
     List<EtsMoQty> result = [];
     List<Map<String, dynamic>> tempResult = [];
     print('Query selectEtsMoQty : $query  ');
     try {
-      var rowData;
+      EtsMoQty rowData;
       await connection.getRowsOfQueryResult(query).then((value) => {
             if (value.runtimeType == String)
               {print('=> ERROR ')}
@@ -95,9 +95,9 @@ EXEC [1_GetMOQty]
               }
           });
     } catch (e) {
-      print('selectEtsMoQty ${mo} --> Exception : ' + e.toString());
+      print('selectEtsMoQty $mo --> Exception : $e');
     }
-    print(' --> result.lenght : ' + result.length.toString());
+    print(' --> result.lenght : ${result.length}');
     return result;
   }
 }

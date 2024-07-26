@@ -1,8 +1,6 @@
 import 'dart:convert';
 
-import 'package:intl/intl.dart';
 
-import 'package:tivnqn/global.dart';
 
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class PRelaxationFabricTable {
@@ -17,47 +15,47 @@ class PRelaxationFabricTable {
   double qty;
   DateTime beginTime;
   int durationHour;
-  get getShelveNo => this.shelveNo;
+  get getShelveNo => shelveNo;
 
   set setShelveNo(shelveNo) => this.shelveNo = shelveNo;
 
-  get getFloor => this.floor;
+  get getFloor => floor;
 
   set setFloor(floor) => this.floor = floor;
 
-  get getKindOfFabric => this.kindOfFabric;
+  get getKindOfFabric => kindOfFabric;
 
   set setKindOfFabric(kindOfFabric) => this.kindOfFabric = kindOfFabric;
 
-  get getCustomer => this.customer;
+  get getCustomer => customer;
 
   set setCustomer(customer) => this.customer = customer;
 
-  get getLine => this.line;
+  get getLine => line;
 
   set setLine(line) => this.line = line;
 
-  get getArtNo => this.artNo;
+  get getArtNo => artNo;
 
   set setArtNo(artNo) => this.artNo = artNo;
 
-  get getLotNo => this.lotNo;
+  get getLotNo => lotNo;
 
   set setLotNo(lotNo) => this.lotNo = lotNo;
 
-  get getColor => this.color;
+  get getColor => color;
 
   set setColor(color) => this.color = color;
 
-  get getQty => this.qty;
+  get getQty => qty;
 
   set setQty(qty) => this.qty = qty;
 
-  get getBeginTime => this.beginTime;
+  get getBeginTime => beginTime;
 
   set setBeginTime(beginTime) => this.beginTime = beginTime;
 
-  get getDurationHour => this.durationHour;
+  get getDurationHour => durationHour;
 
   set setDurationHour(durationHour) => this.durationHour = durationHour;
   PRelaxationFabricTable({
@@ -129,7 +127,7 @@ class PRelaxationFabricTable {
       lotNo: map['lotNo'] as String,
       color: map['color'] as String,
       qty: double.tryParse(map['qty'].toString()) as double,
-      beginTime: DateTime.parse(map['beginTime'].toString()) as DateTime,
+      beginTime: DateTime.parse(map['beginTime'].toString()),
       durationHour: int.tryParse(map['durationHour'].toString()) as int,
     );
   }

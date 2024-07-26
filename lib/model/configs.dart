@@ -1,5 +1,4 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:convert';
 
 class Configs {
   int? id;
@@ -15,53 +14,53 @@ class Configs {
   int? productionChartDurationMinute;
   int? productionChartRangeDay;
   String? etsMO;
-  int? get getId => this.id;
+  int? get getId => id;
 
   set setId(int? id) => this.id = id;
 
-  get getSection => this.section;
+  get getSection => section;
 
   set setSection(section) => this.section = section;
 
-  get getIp => this.ip;
+  get getIp => ip;
 
   set setIp(ip) => this.ip = ip;
 
-  get getMac => this.mac;
+  get getMac => mac;
 
   set setMac(mac) => this.mac = mac;
 
-  get getImageLink => this.imageLink;
+  get getImageLink => imageLink;
 
   set setImageLink(imageLink) => this.imageLink = imageLink;
 
-  get getDoExercise => this.doExercise;
+  get getDoExercise => doExercise;
 
   set setDoExercise(doExercise) => this.doExercise = doExercise;
 
-  get getReloadSeconds => this.reloadSeconds;
+  get getReloadSeconds => reloadSeconds;
 
   set setReloadSeconds(reloadSeconds) => this.reloadSeconds = reloadSeconds;
-  get getAnnouncementOnly => this.announcementOnly;
+  get getAnnouncementOnly => announcementOnly;
 
   set setAnnouncementOnly(announcementOnly) =>
       this.announcementOnly = announcementOnly;
-  get getProductionChartBegin => this.productionChartBegin;
+  get getProductionChartBegin => productionChartBegin;
 
   set setProductionChartBegin(productionChartBegin) =>
       this.productionChartBegin = productionChartBegin;
 
-  get getProductionChartDurationMinute => this.productionChartDurationMinute;
+  get getProductionChartDurationMinute => productionChartDurationMinute;
 
   set setProductionChartDurationMinute(productionChartDurationMinute) =>
       this.productionChartDurationMinute = productionChartDurationMinute;
 
-  get getProductionChartRangeDay => this.productionChartRangeDay;
+  get getProductionChartRangeDay => productionChartRangeDay;
 
   set setProductionChartRangeDay(productionChartRangeDay) =>
       this.productionChartRangeDay = productionChartRangeDay;
 
-  get getEtsMO => this.etsMO;
+  get getEtsMO => etsMO;
 
   set setEtsMO(etsMO) => this.etsMO = etsMO;
   Configs({

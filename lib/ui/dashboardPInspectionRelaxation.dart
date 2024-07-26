@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:intl/intl.dart';
@@ -23,7 +22,7 @@ class DashBoardPInspectionRelaxation extends StatefulWidget {
 
 class _DashBoardPInspectionRelaxationState
     extends State<DashBoardPInspectionRelaxation> {
-  TextStyle rowTextStyle = TextStyle(
+  TextStyle rowTextStyle = const TextStyle(
     fontSize: 8,
   );
   late PRelaxationDataSourceTable pRelaxationDataSourceTable;
@@ -45,7 +44,7 @@ class _DashBoardPInspectionRelaxationState
   );
   Future<void> refreshData() async {
     var temp = await g.sqlApp.sellectPRelaxationFabricTable();
-    if (temp.length > 0) {
+    if (temp.isNotEmpty) {
       setState(() {
         g.pRelaxationFabricTables.clear();
         g.pRelaxationFabricTables = temp;
@@ -87,7 +86,7 @@ class _DashBoardPInspectionRelaxationState
               children: [
                 Row(
                   children: [
-                    RotatedBox(
+                    const RotatedBox(
                       quarterTurns: 3,
                       child: Text(
                         "INSPECTION",
@@ -100,7 +99,7 @@ class _DashBoardPInspectionRelaxationState
                     Column(
                       children: [
                         Container(
-                            padding: EdgeInsets.all(2),
+                            padding: const EdgeInsets.all(2),
                             width: g.screenWidth - 30,
                             height: 77,
                             child: inspectionFabricChart()),
@@ -108,13 +107,13 @@ class _DashBoardPInspectionRelaxationState
                     ),
                   ],
                 ),
-                VerticalDivider(
+                const VerticalDivider(
                   thickness: 3,
                 ),
-                Divider(thickness: 2),
+                const Divider(thickness: 2),
                 Row(
                   children: [
-                    RotatedBox(
+                    const RotatedBox(
                       quarterTurns: 3,
                       child: Text(
                         "RELAXATION",
@@ -128,7 +127,7 @@ class _DashBoardPInspectionRelaxationState
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(
+                        const Text(
                           "Floor     Customer     Line     Art#     Lot#     Color     BeginTime     Duration(hours)   Quantity(m)",
                           style: TextStyle(
                               fontSize: 10,
@@ -136,7 +135,7 @@ class _DashBoardPInspectionRelaxationState
                               color: Colors.black),
                         ),
                         Container(
-                            padding: EdgeInsets.all(1),
+                            padding: const EdgeInsets.all(1),
                             width: g.screenWidth - 30,
                             child: relaxationLayout()),
                       ],
@@ -155,7 +154,7 @@ class _DashBoardPInspectionRelaxationState
         primaryXAxis: CategoryAxis(
           labelAlignment: LabelAlignment.center,
           labelPosition: ChartDataLabelPosition.inside,
-          labelStyle: TextStyle(
+          labelStyle: const TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.bold,
             color: Colors.black,
@@ -184,7 +183,7 @@ class _DashBoardPInspectionRelaxationState
   }
 
   Widget relaxationLayout() {
-    return Container(
+    return SizedBox(
         height: g.screenHeight - 150,
         // color: Colors.white,
         child: MasonryGridView.count(
@@ -247,14 +246,14 @@ class _DashBoardPInspectionRelaxationState
   Widget getRow(int index) {
     return Row(
       children: [
-        Container(
+        SizedBox(
           width: 15,
           child: Text(
             '${g.pRelaxationFabricTables[index].getFloor}',
             style: rowTextStyle,
           ),
         ),
-        Container(
+        SizedBox(
           width: 40,
           child: Text(
             g.pRelaxationFabricTables[index].getCustomer == '-'
@@ -263,7 +262,7 @@ class _DashBoardPInspectionRelaxationState
             style: rowTextStyle,
           ),
         ),
-        Container(
+        SizedBox(
           width: 15,
           child: Text(
             g.pRelaxationFabricTables[index].getLine == 0
@@ -272,7 +271,7 @@ class _DashBoardPInspectionRelaxationState
             style: rowTextStyle,
           ),
         ),
-        Container(
+        SizedBox(
           width: 91,
           child: Text(
             g.pRelaxationFabricTables[index].getArtNo == '-'
@@ -281,7 +280,7 @@ class _DashBoardPInspectionRelaxationState
             style: rowTextStyle,
           ),
         ),
-        Container(
+        SizedBox(
           width: 65,
           child: Text(
             g.pRelaxationFabricTables[index].getLotNo == '-'
@@ -290,7 +289,7 @@ class _DashBoardPInspectionRelaxationState
             style: rowTextStyle,
           ),
         ),
-        Container(
+        SizedBox(
           width: 70,
           child: Text(
             g.pRelaxationFabricTables[index].getColor == '-'
@@ -299,18 +298,18 @@ class _DashBoardPInspectionRelaxationState
             style: rowTextStyle,
           ),
         ),
-        Container(
+        SizedBox(
           width: 60,
           child: Text(
             g.pRelaxationFabricTables[index].customer == '-'
                 ? '-'
-                : '${DateFormat("dd-MMM hh:mm").format(
+                : DateFormat("dd-MMM hh:mm").format(
                     g.pRelaxationFabricTables[index].getBeginTime,
-                  )}',
+                  ),
             style: rowTextStyle,
           ),
         ),
-        Container(
+        SizedBox(
           width: 20,
           child: Text(
             g.pRelaxationFabricTables[index].customer == '-'
@@ -319,7 +318,7 @@ class _DashBoardPInspectionRelaxationState
             style: rowTextStyle,
           ),
         ),
-        Container(
+        SizedBox(
           width: 35,
           child: Text(
             g.pRelaxationFabricTables[index].customer == '-'
@@ -333,7 +332,7 @@ class _DashBoardPInspectionRelaxationState
   }
 
   Widget relaxationTable(PRelaxationDataSourceTable dataSource) {
-    TextStyle textStyle = TextStyle(
+    TextStyle textStyle = const TextStyle(
         fontSize: 13, fontWeight: FontWeight.bold, color: Colors.white);
     return SfDataGridTheme(
       data: SfDataGridThemeData(
@@ -350,7 +349,7 @@ class _DashBoardPInspectionRelaxationState
                 columnName: 'shelveNo',
                 width: 60,
                 label: Container(
-                    padding: EdgeInsets.all(2.0),
+                    padding: const EdgeInsets.all(2.0),
                     alignment: Alignment.centerLeft,
                     child: Text(
                       'SHELVE'.toUpperCase(),
@@ -360,7 +359,7 @@ class _DashBoardPInspectionRelaxationState
                 columnName: 'fabric',
                 width: 70,
                 label: Container(
-                    padding: EdgeInsets.all(2.0),
+                    padding: const EdgeInsets.all(2.0),
                     alignment: Alignment.centerLeft,
                     child: Text(
                       'fabric'.toUpperCase(),
@@ -370,7 +369,7 @@ class _DashBoardPInspectionRelaxationState
                 columnName: 'customer',
                 width: 90,
                 label: Container(
-                    padding: EdgeInsets.all(2.0),
+                    padding: const EdgeInsets.all(2.0),
                     alignment: Alignment.centerLeft,
                     child: Text(
                       'customer'.toUpperCase(),
@@ -380,7 +379,7 @@ class _DashBoardPInspectionRelaxationState
                 columnName: 'line',
                 width: 35,
                 label: Container(
-                    padding: EdgeInsets.all(2.0),
+                    padding: const EdgeInsets.all(2.0),
                     alignment: Alignment.centerLeft,
                     child: Text(
                       'Line'.toUpperCase(),
@@ -390,7 +389,7 @@ class _DashBoardPInspectionRelaxationState
                 columnName: 'artLotNo',
                 width: 110,
                 label: Container(
-                    padding: EdgeInsets.all(2.0),
+                    padding: const EdgeInsets.all(2.0),
                     alignment: Alignment.centerLeft,
                     child: Text(
                       '''Art #
@@ -401,7 +400,7 @@ Lot #''',
                 columnName: 'color',
                 width: 105,
                 label: Container(
-                    padding: EdgeInsets.all(2.0),
+                    padding: const EdgeInsets.all(2.0),
                     alignment: Alignment.centerLeft,
                     child: Text(
                       'Color'.toUpperCase(),
@@ -411,7 +410,7 @@ Lot #''',
                 columnName: 'qty',
                 width: 45,
                 label: Container(
-                    padding: EdgeInsets.all(2.0),
+                    padding: const EdgeInsets.all(2.0),
                     alignment: Alignment.centerLeft,
                     child: Text(
                       'Qty',
@@ -421,7 +420,7 @@ Lot #''',
                 columnName: 'time',
                 width: 140,
                 label: Container(
-                    padding: EdgeInsets.all(2.0),
+                    padding: const EdgeInsets.all(2.0),
                     alignment: Alignment.centerLeft,
                     child: Text(
                       '''Time Begin
@@ -438,14 +437,14 @@ Actual/plan (hours)''',
         primaryXAxis: CategoryAxis(
           labelAlignment: LabelAlignment.center,
           labelPosition: ChartDataLabelPosition.inside,
-          labelStyle: TextStyle(
+          labelStyle: const TextStyle(
             fontSize: 8,
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),
         ),
         primaryYAxis:
-            NumericAxis(isVisible: false, labelStyle: TextStyle(fontSize: 8)),
+            NumericAxis(isVisible: false, labelStyle: const TextStyle(fontSize: 8)),
         series: <ChartSeries>[
           StackedBar100Series<ChartDataPInspection, String>(
               color: Colors.green[300],

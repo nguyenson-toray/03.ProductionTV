@@ -69,31 +69,31 @@ class MyFuntions {
     Color result = Colors.blueAccent;
     switch (line) {
       case 1:
-        result = Color.fromARGB(50, 100, 150, 150);
+        result = const Color.fromARGB(50, 100, 150, 150);
         break;
       case 2:
-        result = Color.fromARGB(70, 100, 150, 150);
+        result = const Color.fromARGB(70, 100, 150, 150);
         break;
       case 3:
-        result = Color.fromARGB(90, 100, 150, 150);
+        result = const Color.fromARGB(90, 100, 150, 150);
         break;
       case 4:
-        result = Color.fromARGB(50, 120, 200, 250);
+        result = const Color.fromARGB(50, 120, 200, 250);
         break;
       case 5:
-        result = Color.fromARGB(70, 120, 200, 250);
+        result = const Color.fromARGB(70, 120, 200, 250);
         break;
       case 6:
-        result = Color.fromARGB(90, 120, 200, 250);
+        result = const Color.fromARGB(90, 120, 200, 250);
         break;
       case 7:
-        result = Color.fromARGB(50, 160, 200, 250);
+        result = const Color.fromARGB(50, 160, 200, 250);
         break;
       case 8:
-        result = Color.fromARGB(70, 160, 200, 250);
+        result = const Color.fromARGB(70, 160, 200, 250);
         break;
       case 9:
-        result = Color.fromARGB(90, 160, 200, 250);
+        result = const Color.fromARGB(90, 160, 200, 250);
         break;
       default:
         result = Colors.blue;
@@ -124,7 +124,7 @@ class MyFuntions {
     } else if (ration <= 50) {
       result = Colors.orange;
     } else if (ration <= 75) {
-      result = Color.fromARGB(255, 249, 227, 25);
+      result = const Color.fromARGB(255, 249, 227, 25);
     } else {
       result = Colors.greenAccent;
     }
@@ -139,9 +139,9 @@ class MyFuntions {
     } else if (ration <= 50) {
       result = const Color.fromARGB(255, 216, 130, 2);
     } else if (ration <= 75) {
-      result = Color.fromARGB(255, 240, 220, 37);
+      result = const Color.fromARGB(255, 240, 220, 37);
     } else {
-      result = Color.fromARGB(255, 10, 186, 19);
+      result = const Color.fromARGB(255, 10, 186, 19);
     }
     return result;
   }
@@ -253,7 +253,7 @@ class MyFuntions {
               DateFormat(g.dateFormatVi).format(
                 g.today,
               ),
-              style: TextStyle(
+              style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                   fontSize: 20)),
@@ -354,7 +354,7 @@ class MyFuntions {
       child: Stack(
         children: [
           Container(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             width: g.screenWidth,
             height: g.screenHeight - g.appBarH,
             color: Colors.lime[100],
@@ -373,12 +373,12 @@ class MyFuntions {
             ),
           ),
           Positioned(
+            right: 0,
+            top: 0,
             child: SizedBox(
                 width: 50,
                 height: 50,
                 child: Image.asset('assets/speaker.gif')),
-            right: 0,
-            top: 0,
           )
         ],
       ),
@@ -411,7 +411,7 @@ class MyFuntions {
       }
     }
 
-    print('checkThongBao : ' + result.toString());
+    print('checkThongBao : $result');
     return result;
   }
 
@@ -435,7 +435,7 @@ class MyFuntions {
     await g.sqlProductionDB
         .selectSqlT50InspectionData(0, g.rangeDays, g.timeTypes[0], summary)
         .then((value) => {
-              if (value != null && value.length > 0)
+              if (value.isNotEmpty)
                 {
                   g.sqlT50InspectionDataDailys.clear(),
                   g.sqlT50InspectionDataDailys = value
@@ -444,7 +444,7 @@ class MyFuntions {
     g.sqlProductionDB
         .selectSqlT50InspectionData(0, g.rangeDays, g.timeTypes[1], summary)
         .then((value) => {
-              if (value != null && value.length > 0)
+              if (value.isNotEmpty)
                 {
                   g.sqlT50InspectionDataWeeklys.clear(),
                   g.sqlT50InspectionDataWeeklys = value
@@ -453,7 +453,7 @@ class MyFuntions {
     await g.sqlProductionDB
         .selectSqlT50InspectionData(0, g.rangeDays, g.timeTypes[2], summary)
         .then((value) => {
-              if (value != null && value.length > 0)
+              if (value.isNotEmpty)
                 {
                   g.sqlT50InspectionDataMonthlys.clear(),
                   g.sqlT50InspectionDataMonthlys = value
@@ -462,12 +462,12 @@ class MyFuntions {
   }
 
   static Future<void> selectT50InspectionDataOneByOne(int summary) async {
-    print('selectT50InspectionDataOneByOne:' + summary.toString());
-    if (g.isTVLine)
+    print('selectT50InspectionDataOneByOne:$summary');
+    if (g.isTVLine) {
       g.sqlT50InspectionDataDailys = await g.sqlProductionDB
           .selectSqlT50InspectionData(
               g.currentLine, g.rangeDays, g.timeTypes[0], 0);
-    else {
+    } else {
       g.sqlT50InspectionDataDailys = await g.sqlProductionDB
           .selectSqlT50InspectionData(0, g.rangeDays, g.timeTypes[0], 0);
       g.sqlT50InspectionDataWeeklys = await g.sqlProductionDB
@@ -504,7 +504,7 @@ class MyFuntions {
   }
 
   static Future<void> sellectDataETS(String mo) async {
-    print('sellectDataETS:' + mo);
+    print('sellectDataETS:$mo');
     g.etsMoInfo = await g.sqlEtsDB.selectEtsMoInfo(mo);
     g.etsMoQtys = await g.sqlEtsDB.selectEtsMoQty(mo);
   }
@@ -519,7 +519,7 @@ class MyFuntions {
       ),
       Text(
         'Version ${g.version}',
-        style: TextStyle(fontSize: 6),
+        style: const TextStyle(fontSize: 6),
       )
     ]);
   }

@@ -1,8 +1,6 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
 import 'package:tivnqn/global.dart';
 import 'package:tivnqn/myFuntions.dart';
 
@@ -40,7 +38,7 @@ class _DashboardImageState extends State<DashboardImage> {
         actions: [
           MyFuntions.clockAppBar(context),
           InkWell(
-            child: Icon(
+            child: const Icon(
               Icons.refresh_sharp,
               color: Colors.amberAccent,
             ),
@@ -53,7 +51,7 @@ class _DashboardImageState extends State<DashboardImage> {
         centerTitle: true,
         title: Text(
           widget.title.toUpperCase(),
-          style: TextStyle(
+          style: const TextStyle(
               fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
         ),
       ),
@@ -91,7 +89,7 @@ class _DashboardImageState extends State<DashboardImage> {
           if (loadingProgress == null) {
             return child;
           }
-          return Container(
+          return SizedBox(
             width: g.screenWidth,
             height: 5,
             child: LinearProgressIndicator(

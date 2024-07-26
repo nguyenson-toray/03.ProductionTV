@@ -1,13 +1,10 @@
 import 'dart:io';
 
-import 'package:intl/intl.dart';
-import 'package:tivnqn/global.dart';
 import 'package:connect_to_sql_server_directly/connect_to_sql_server_directly.dart';
 import 'package:tivnqn/model/configs.dart';
 import 'package:tivnqn/model/planning.dart';
 import 'package:tivnqn/model/preparation/pCutting.dart';
 import 'package:tivnqn/model/preparation/pDispatch.dart';
-import 'package:tivnqn/model/preparation/pInspectionFabric.dart';
 import 'package:tivnqn/model/preparation/pRelaxationfabricTable.dart';
 import 'package:tivnqn/model/thongbao.dart';
 
@@ -74,19 +71,13 @@ class SqlApp {
                     result.add(
                       Planning(
                         line: element['line'],
-                        brand: element['brand'] != null ? element['brand'] : '',
-                        style: element['style'] != null ? element['style'] : '',
-                        desc: element['description'] != null
-                            ? element['description']
-                            : '',
-                        quantity: element['quantity'] != null
-                            ? element['quantity']
-                            : 0,
+                        brand: element['brand'] ?? '',
+                        style: element['style'] ?? '',
+                        desc: element['description'] ?? '',
+                        quantity: element['quantity'] ?? 0,
                         beginDate: DateTime.parse(element['beginDate']),
                         endDate: DateTime.parse(element['endDate']),
-                        comment: element['comment'] != null
-                            ? element['comment']
-                            : '',
+                        comment: element['comment'] ?? '',
                       ),
                     )
                   }
@@ -103,10 +94,10 @@ class SqlApp {
   Future<List<Configs>> sellectConfigs() async {
     List<Configs> result = [];
     List<Map<String, dynamic>> tempResult = [];
-    final String query = '''select * from [App].[dbo].[Configs] ''';
+    const String query = '''select * from [App].[dbo].[Configs] ''';
     print('Query : $query  ');
     try {
-      var rowData;
+      Configs rowData;
       await connection.getRowsOfQueryResult(query).then((value) => {
             if (value.runtimeType == String)
               {print('=> ERROR ')}
@@ -121,7 +112,7 @@ class SqlApp {
               }
           });
     } catch (e) {
-      print('sellectConfigs --> Exception : ' + e.toString());
+      print('sellectConfigs --> Exception : $e');
     }
     return result;
   }
@@ -137,7 +128,7 @@ class SqlApp {
         thoigian2: now,
         thoigian3: now);
     List<Map<String, dynamic>> tempResult = [];
-    final String query = '''select * from [App].[dbo].[thongbao] ''';
+    const String query = '''select * from [App].[dbo].[thongbao] ''';
     print('Query : $query  ');
     try {
       var rowData;
@@ -151,7 +142,7 @@ class SqlApp {
               }
           });
     } catch (e) {
-      print('sellectThongBao --> Exception : ' + e.toString());
+      print('sellectThongBao --> Exception : $e');
     }
     return result;
   }
@@ -160,12 +151,12 @@ class SqlApp {
     List<PCutting> result = [];
     List<Map<String, dynamic>> tempResult = [];
 
-    final String query = '''select * from [App].[dbo].[PCutting]
+    const String query = '''select * from [App].[dbo].[PCutting]
         WHERE CAST(date AS DATE) = CAST(GETDATE() AS DATE) 
         ''';
     print('Query : $query  ');
     try {
-      var rowData;
+      PCutting rowData;
       await connection.getRowsOfQueryResult(query).then((value) => {
             if (value.runtimeType == String)
               {print('=> ERROR ')}
@@ -181,7 +172,7 @@ class SqlApp {
               }
           });
     } catch (e) {
-      print('sellectPCutting --> Exception : ' + e.toString());
+      print('sellectPCutting --> Exception : $e');
     }
     return result;
   }
@@ -190,12 +181,12 @@ class SqlApp {
     List<PDispatch> result = [];
     List<Map<String, dynamic>> tempResult = [];
 
-    final String query = '''select * from [App].[dbo].[PDispatch]
+    const String query = '''select * from [App].[dbo].[PDispatch]
         WHERE CAST(date AS DATE) = CAST(GETDATE() AS DATE) 
         ''';
     print('Query : $query  ');
     try {
-      var rowData;
+      PDispatch rowData;
       await connection.getRowsOfQueryResult(query).then((value) => {
             if (value.runtimeType == String)
               {print('=> ERROR ')}
@@ -210,7 +201,7 @@ class SqlApp {
               }
           });
     } catch (e) {
-      print('sellect PDispatch --> Exception : ' + e.toString());
+      print('sellect PDispatch --> Exception : $e');
     }
     return result;
   }
@@ -218,11 +209,11 @@ class SqlApp {
   Future<List<PRelaxationFabricTable>> sellectPRelaxationFabricTable() async {
     List<PRelaxationFabricTable> result = [];
     List<Map<String, dynamic>> tempResult = [];
-    final String query = '''select * from [App].[dbo].[PRelaxationFabricNew1]
+    const String query = '''select * from [App].[dbo].[PRelaxationFabricNew1]
     ORDER BY Id ASC''';
     print('Query : $query  ');
     try {
-      var rowData;
+      PRelaxationFabricTable rowData;
       await connection.getRowsOfQueryResult(query).then((value) => {
             if (value.runtimeType == String)
               {print('=> ERROR ')}
@@ -237,8 +228,7 @@ class SqlApp {
               }
           });
     } catch (e) {
-      print('sellect sellectPRelaxationFabricTable --> Exception : ' +
-          e.toString());
+      print('sellect sellectPRelaxationFabricTable --> Exception : $e');
     }
     return result;
   }

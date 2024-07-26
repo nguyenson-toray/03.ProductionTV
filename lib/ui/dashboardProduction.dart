@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:cron/cron.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -45,14 +44,15 @@ class _DashboardProductionState extends State<DashboardProduction> {
       Future.delayed(Durations.short1)
           .then((value) => Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => DashboardETS()),
+                MaterialPageRoute(builder: (context) => const DashboardETS()),
               ));
     }
 
-    if (g.autochangeLine)
+    if (g.autochangeLine) {
       Timer.periodic(Duration(minutes: playMinute), (timer) async {
         increaseLineNumber();
       });
+    }
     myTimer = Timer.periodic(Duration(seconds: g.config.getReloadSeconds),
         (timer) async {
       g.configs = await g.sqlApp.sellectConfigs();
@@ -62,14 +62,14 @@ class _DashboardProductionState extends State<DashboardProduction> {
           await MyFuntions.sellectDataETS(g.currentMo);
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => DashboardETS()),
+            MaterialPageRoute(builder: (context) => const DashboardETS()),
           );
         } else {
           g.thongbao = await g.sqlApp.sellectThongBao();
           if (MyFuntions.checkThongBao()) {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => Announcement()),
+              MaterialPageRoute(builder: (context) => const Announcement()),
             );
           }
         }
@@ -99,7 +99,7 @@ class _DashboardProductionState extends State<DashboardProduction> {
       body: Column(
         children: [
           Container(
-            padding: EdgeInsets.all(2),
+            padding: const EdgeInsets.all(2),
             alignment: Alignment.center,
             width: g.screenWidth - explainColorH,
             height: explainColorH,
@@ -108,23 +108,23 @@ class _DashboardProductionState extends State<DashboardProduction> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
-                    color: Colors.blueAccent[400], child: Text('Số lượng đạt')),
+                    color: Colors.blueAccent[400], child: const Text('Số lượng đạt')),
                 Container(
-                    color: Colors.redAccent[400], child: Text('Số lượng lỗi')),
-                Container(color: Colors.tealAccent, child: Text('Thông số')),
-                Container(color: Colors.orangeAccent, child: Text('Phụ kiện')),
-                Container(color: Colors.grey, child: Text('Nguy hiểm')),
-                Container(color: Colors.yellowAccent, child: Text('Vải')),
+                    color: Colors.redAccent[400], child: const Text('Số lượng lỗi')),
+                Container(color: Colors.tealAccent, child: const Text('Thông số')),
+                Container(color: Colors.orangeAccent, child: const Text('Phụ kiện')),
+                Container(color: Colors.grey, child: const Text('Nguy hiểm')),
+                Container(color: Colors.yellowAccent, child: const Text('Vải')),
                 Container(
-                    color: Colors.lightBlueAccent, child: Text('Lỗi may')),
+                    color: Colors.lightBlueAccent, child: const Text('Lỗi may')),
                 Container(
-                    color: Colors.greenAccent, child: Text('Ngoại quan, TP')),
-                Container(color: Colors.cyanAccent, child: Text('Phụ liệu')),
-                Container(color: Colors.purpleAccent, child: Text('Khác')),
+                    color: Colors.greenAccent, child: const Text('Ngoại quan, TP')),
+                Container(color: Colors.cyanAccent, child: const Text('Phụ liệu')),
+                Container(color: Colors.purpleAccent, child: const Text('Khác')),
               ],
             ),
           ),
-          Divider(thickness: 1),
+          const Divider(thickness: 1),
           Container(
             alignment: Alignment.center,
             width: g.screenWidth - explainColorH,
@@ -135,29 +135,29 @@ class _DashboardProductionState extends State<DashboardProduction> {
               children: [
                 Container(
                   width: (g.screenWidth - explainColorH) / 3,
+                  alignment: Alignment.center,
                   child: Text(
                     "Tổng số lượng đạt, lỗi & tỉ lệ lỗi chung".toUpperCase(),
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  alignment: Alignment.center,
                 ),
                 Container(
                   width: (g.screenWidth - explainColorH) / 3,
+                  alignment: Alignment.center,
                   child: Text(
                     "Số lượng các nhóm lỗi".toUpperCase(),
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  alignment: Alignment.center,
                 ),
                 g.isTVLine
                     ? Container()
                     : Container(
                         width: (g.screenWidth - explainColorH) / 3,
+                        alignment: Alignment.center,
                         child: Text(
                           "Tỉ lệ các nhóm lỗi".toUpperCase(),
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        alignment: Alignment.center,
                       )
               ],
             ),
@@ -167,19 +167,19 @@ class _DashboardProductionState extends State<DashboardProduction> {
               Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  RotatedBox(
+                  const RotatedBox(
                     quarterTurns: 3,
                     child: Text(
                       'KQ kiểm sơ cấp',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 100,
                   ),
                   g.isTVLine
                       ? Container()
-                      : RotatedBox(
+                      : const RotatedBox(
                           quarterTurns: 3,
                           child: Text(
                             'KQ kiểm thứ cấp',
@@ -193,18 +193,18 @@ class _DashboardProductionState extends State<DashboardProduction> {
                   color: Colors.black12,
                   width: g.screenWidth - explainColorH,
                   height: g.screenHeight - g.appBarH - explainColorH * 2 - 16,
-                  padding: EdgeInsets.all(2),
+                  padding: const EdgeInsets.all(2),
                   // color: Colors.greenAccent,
                   child: MasonryGridView.count(
                       shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       crossAxisSpacing: 0,
                       padding: const EdgeInsets.all(0),
                       itemCount: g.isTVLine ? 2 : 6,
                       crossAxisCount: g.isTVLine ? 2 : 3,
                       itemBuilder: (BuildContext context, int index) {
                         return Container(
-                            padding: EdgeInsets.all(1),
+                            padding: const EdgeInsets.all(1),
                             height: g.isTVLine ? chartH * 2 : chartH,
                             child: createUIChartAtIndex(
                                 index, g.timeType, g.selectAllLine));
@@ -445,7 +445,7 @@ class _DashboardProductionState extends State<DashboardProduction> {
               values: g.lines,
               indexOfDefault: g.lines.indexOf(g.currentLine),
               orientation: RadioGroupOrientation.Horizontal,
-              decoration: RadioGroupDecoration(
+              decoration: const RadioGroupDecoration(
                 spacing: 2.0,
                 labelStyle: TextStyle(color: Colors.white, fontSize: 15),
                 activeColor: Colors.white,
@@ -462,7 +462,7 @@ class _DashboardProductionState extends State<DashboardProduction> {
         values: g.timeTypes,
         indexOfDefault: g.timeTypes.indexOf(g.timeType),
         orientation: RadioGroupOrientation.Horizontal,
-        decoration: RadioGroupDecoration(
+        decoration: const RadioGroupDecoration(
           spacing: 2.0,
           labelStyle: TextStyle(color: Colors.black, fontSize: 8),
           activeColor: Colors.amber,
@@ -480,7 +480,7 @@ class _DashboardProductionState extends State<DashboardProduction> {
               });
             },
           ),
-          Text(
+          const Text(
             '''All
 Line ''',
             style: TextStyle(color: Colors.white),

@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:tivnqn/global.dart';
 import 'package:tivnqn/model/etsMoQty.dart';
@@ -69,13 +68,13 @@ class _DashboardETSState extends State<DashboardETS> {
         if (MyFuntions.checkThongBao()) {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => Announcement()),
+            MaterialPageRoute(builder: (context) => const Announcement()),
           );
         }
       }
     });
     if (g.autochangeLine) {
-      Timer.periodic(Duration(minutes: 5), (timer) async {
+      Timer.periodic(const Duration(minutes: 5), (timer) async {
         index == g.etsMOs.length - 1 ? index = 0 : index++;
 
         setState(() {
@@ -115,14 +114,14 @@ class _DashboardETSState extends State<DashboardETS> {
               width: leftCollumnW,
               child: SfCartesianChart(
                   // legend: myLegendETSDaily,
-                  title: ChartTitle(text: '${'SẢN LƯỢNG HÔM NAY '}'),
+                  title: ChartTitle(text: 'SẢN LƯỢNG HÔM NAY '),
                   primaryXAxis: CategoryAxis(
                     title: AxisTitle(
                       text:
                           'Công đoạn : 1..10 : Chuẩn bị           11..100: May',
                     ),
                     labelPosition: ChartDataLabelPosition.outside,
-                    labelStyle: TextStyle(
+                    labelStyle: const TextStyle(
                       // fontSize: 13,
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
@@ -136,7 +135,7 @@ class _DashboardETSState extends State<DashboardETS> {
                         xValueMapper: (EtsMoQty data, _) =>
                             data.getGxNo.toString(),
                         yValueMapper: (EtsMoQty data, _) => data.getQtyToday,
-                        color: Color.fromRGBO(8, 142, 255, 1))
+                        color: const Color.fromRGBO(8, 142, 255, 1))
                   ])),
           Container(
               color: Colors.white,
@@ -146,7 +145,7 @@ class _DashboardETSState extends State<DashboardETS> {
                   title: ChartTitle(text: 'TỔNG SẢN LƯỢNG LUỸ KẾ'),
                   primaryXAxis: CategoryAxis(
                     labelPosition: ChartDataLabelPosition.inside,
-                    labelStyle: TextStyle(
+                    labelStyle: const TextStyle(
                       // fontSize: 13,
                       // fontWeight: FontWeight.bold,
                       color: Colors.black,
@@ -158,12 +157,8 @@ class _DashboardETSState extends State<DashboardETS> {
                         dataSource: g.etsMoQtys,
                         // dataLabelSettings: myDataLabelSettingsETSTotal,
                         xValueMapper: (EtsMoQty data, _) =>
-                            data.getGxNo.toString() +
-                            '-' +
-                            data.getGxName +
-                            " : " +
-                            data.getQtyCommulative.toString() +
-                            " pcs",
+                            "${'${data.getGxNo}-' +
+                            data.getGxName} : ${data.getQtyCommulative} pcs",
                         yValueMapper: (EtsMoQty data, _) =>
                             data.getQtyCommulative,
                         name: "Hoàn thành",
@@ -174,12 +169,8 @@ class _DashboardETSState extends State<DashboardETS> {
                         dataSource: g.etsMoQtys,
                         // dataLabelSettings: myDataLabelSettingsETSTotal,
                         xValueMapper: (EtsMoQty data, _) =>
-                            data.getGxNo.toString() +
-                            '-' +
-                            data.getGxName +
-                            " : " +
-                            data.getQtyCommulative.toString() +
-                            " pcs",
+                            "${'${data.getGxNo}-' +
+                            data.getGxName} : ${data.getQtyCommulative} pcs",
                         yValueMapper: (EtsMoQty data, _) =>
                             g.etsMoInfo.getQty - data.getQtyCommulative,
                         name: "Còn lại",

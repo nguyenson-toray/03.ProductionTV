@@ -22,11 +22,12 @@ class _AnnouncementState extends State<Announcement> {
   void initState() {
     AssetsAudioPlayer.newPlayer().open(Audio("assets/notification_sound.wav"),
         autoStart: true, volume: 0.7);
-    if (g.config.getAnnouncementOnly != 1)
+    if (g.config.getAnnouncementOnly != 1) {
       Timer.periodic(Duration(minutes: g.thongbao.getThoiluongPhut),
           (Timer timer) async {
         Navigator.pop(context);
       });
+    }
     Timer.periodic(Duration(seconds: g.config.getReloadSeconds), (timer) async {
       getAnnouncement();
     });
@@ -62,12 +63,12 @@ class _AnnouncementState extends State<Announcement> {
           actions: [Image.asset('assets/speaker.gif')],
           title: Text(
             g.thongbao.getTieude,
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           ),
         ),
         body: FittedBox(
           child: Container(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             width: g.screenWidth,
             height: g.screenHeight - g.appBarH,
             color: Colors.lime[100],

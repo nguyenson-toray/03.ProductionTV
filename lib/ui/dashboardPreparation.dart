@@ -1,8 +1,5 @@
 import 'dart:async';
-import 'dart:io';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:tivnqn/myFuntions.dart';
 import 'package:tivnqn/global.dart';
 import 'package:tivnqn/ui/dashboardPCutting.dart';
@@ -45,15 +42,15 @@ class _DashboardPreparationState extends State<DashboardPreparation> {
         centerTitle: true,
         title: Text(
           g.title,
-          style: TextStyle(
+          style: const TextStyle(
               fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
         ),
       ),
       body: g.config.getSection == 'preparation1'
-          ? DashBoardPInspectionRelaxation()
+          ? const DashBoardPInspectionRelaxation()
           : g.config.getSection == 'preparation2'
-              ? DashboardPCutting()
-              : DashboardPDispatch(),
+              ? const DashboardPCutting()
+              : const DashboardPDispatch(),
     );
   }
 }

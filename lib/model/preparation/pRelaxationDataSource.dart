@@ -66,18 +66,18 @@ ${DateTime.now().difference(e.getBeginTime).inHours} / ${e.getDurationHour}'''),
         cells: row.getCells().map<Widget>((dataGridCell) {
           return Container(
             alignment: Alignment.centerLeft,
-            padding: EdgeInsets.all(1.0),
+            padding: const EdgeInsets.all(1.0),
             child: Text(
               dataGridCell.value.toString(),
               style: dataGridCell.value.toString().length == 23 &&
                       (dataGridCell.value.toString().substring(16, 17) ==
                           dataGridCell.value.toString().substring(21, 22))
-                  ? TextStyle(
+                  ? const TextStyle(
                       fontSize: 13,
                       color: Colors.green,
                       // fontWeight: FontWeight.bold
                     )
-                  : TextStyle(
+                  : const TextStyle(
                       fontSize: 13,
                     ),
             ),
