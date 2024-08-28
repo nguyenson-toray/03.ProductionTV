@@ -10,7 +10,7 @@ import 'package:tivnqn/model/thongbao.dart';
 
 class SqlApp {
   var connection = ConnectToSqlServerDirectly();
-  final String ipLAN = '192.168.1.11';
+  final String ipLAN = '10.0.1.4';
   final String dbName = 'App';
   final String instanceSql = 'MSSQLSERVER';
   final user = 'app';

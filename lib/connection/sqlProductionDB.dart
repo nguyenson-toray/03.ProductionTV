@@ -5,7 +5,7 @@ import 'package:tivnqn/model/sqlT58InlineData.dart';
 
 class SqlProductionDB {
   var connection = ConnectToSqlServerDirectly();
-  final String ipLAN = '192.168.1.11';
+  final String ipLAN = '10.0.1.4';
   final String dbName = 'Production';
   final int port = 1433;
   final String instanceSql = 'MSSQLSERVER';
@@ -13,7 +13,7 @@ class SqlProductionDB {
   final pass = 'Toray@123';
   Future<bool> checkLAN() async {
     bool lanConnection = false;
-    const String ipLAN = '192.168.1.11';
+    const String ipLAN = '10.0.1.4';
     const int port = 1433;
     await Socket.connect(ipLAN, port, timeout: const Duration(seconds: 3))
         .then((socket) {

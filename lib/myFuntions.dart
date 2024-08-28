@@ -484,7 +484,7 @@ class MyFuntions {
     }
   }
 
-  static Future<void> selectTInlineData() async {
+  static Future<bool> selectTInlineData() async {
     print('selectT58InlineData:');
     List<SqlT58InlineData> sqlT58InlineDataDetailAllProcess = [];
     late DateTime lastDate;
@@ -501,6 +501,9 @@ class MyFuntions {
     g.curentItemNo = g.sqlT58InlineDataLastDay.last.getItemNo;
     g.sqlT59TransInline =
         await g.sqlProductionDB.selectSqlT59TransInline(g.curentItemNo);
+    return g.sqlT58InlineDataDailysSumProcess.isNotEmpty &&
+        sqlT58InlineDataDetailAllProcess.isNotEmpty &&
+        sqlT58InlineDataDetailAllProcess.isNotEmpty;
   }
 
   static Future<void> sellectDataETS(String mo) async {

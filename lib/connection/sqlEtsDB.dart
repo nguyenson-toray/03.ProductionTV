@@ -6,7 +6,7 @@ import 'package:tivnqn/model/etsMoQty.dart';
 
 class SqlEtsDB {
   var connection = ConnectToSqlServerDirectly();
-  final String ipLAN = '192.168.1.11';
+  final String ipLAN = '10.0.1.4';
   final String dbName = 'ETSDB_TI';
   final int port = 1433;
   final String instanceSql = 'MSSQLSERVER';

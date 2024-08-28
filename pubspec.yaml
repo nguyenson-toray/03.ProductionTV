@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 6.0.1+1
+version: 6.0.3+1
 
 environment:
   sdk: '>=3.0.2 <4.0.0'
@@ -68,7 +68,7 @@ dependencies:
   radio_group_v2: ^1.0.2
   syncfusion_flutter_core: ^23.2.7
   text_scroll: ^0.2.0
-
+  wifi_iot: ^0.3.19   
   # flutter pub run change_app_package_name:main com.new.package.name
 
   # flutter pub get
@@ -128,6 +128,7 @@ flutter:
     - assets/ets.png
     - assets/list.png  
     - assets/changeScreen.png 
+    - assets/remotetv.png 
 
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a

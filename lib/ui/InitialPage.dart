@@ -2,20 +2,18 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:network_info_plus/network_info_plus.dart';
 import 'package:tivnqn/global.dart';
-import 'package:cron/cron.dart';
 import 'dart:async';
 import 'package:flu_wake_lock/flu_wake_lock.dart';
 import 'package:tivnqn/model/preparation/.chartDataPCutting.dart';
 import 'package:tivnqn/model/preparation/chartDataPInspection.dart';
 import 'package:tivnqn/myFuntions.dart';
-import 'package:tivnqn/ui/announcement.dart';
 import 'package:tivnqn/ui/dashboardDataInline.dart';
 import 'package:tivnqn/ui/dashboardProduction.dart';
 import 'package:tivnqn/ui/dashboardImage.dart';
 import 'package:tivnqn/ui/dashboardPlanning.dart';
 import 'package:tivnqn/ui/dashboardPreparation.dart';
-import 'package:tivnqn/ui/dashboardETS.dart';
-import 'package:youtube_player_flutter_quill/youtube_player_flutter_quill.dart';
+import 'package:wifi_iot/wifi_iot.dart';
+import 'dart:io' show Platform, Socket;
 
 class InitialPgae extends StatefulWidget {
   const InitialPgae({super.key});
@@ -28,80 +26,62 @@ class _InitialPgaeState extends State<InitialPgae> {
   bool isShowDataInline = true;
   bool isConnectedSqlAppTiqn = false;
   bool isLoading = true;
-  String textLoading = "Load config !";
+  bool isWiFiEnabled = false;
+  String textLoading = "";
   FluWakeLock fluWakeLock = FluWakeLock();
-  late YoutubePlayerController controller;
-  var cron = Cron();
-  bool isPlaying = false;
-  bool isPlayed = false;
-  String linkDoExercise =
-      'https://www.youtube.com/watch?v=Sv7bkD9t9zU&t=8s&ab_channel=%E6%9D%B1%E6%80%A5%E5%BB%BA%E8%A8%AD%E5%85%AC%E5%BC%8F';
-
-  String videoID = '';
-  bool playerIsReady = false;
-  late DateTime exceriseBegin;
-  late DateTime currentTime;
-  Duration seekTime = const Duration(milliseconds: 0);
-  late int hour;
-  late int minute;
-  String hourString = "07";
-  String minuteString = "45";
-  bool showVideo = false;
   String imgLinkOrg = '';
+  int count = 0;
   @override
   initState() {
     // TODO: implement initState
-    Timer(const Duration(milliseconds: 300), () async {
-      g.screenWidth = MediaQuery.of(context).size.width;
-      g.screenHeight = MediaQuery.of(context).size.height;
-      print('screen size : ${g.screenWidth} x ${g.screenHeight}');
-    });
     fluWakeLock.enable();
-
-    initSQLConfigsDoExcerise();
-
-    videoID = YoutubePlayer.convertUrlToId(linkDoExercise)!;
-    controller = YoutubePlayerController(
-      initialVideoId: videoID,
-      flags: const YoutubePlayerFlags(
-        hideControls: true,
-        loop: false,
-        mute: kDebugMode ? false : true,
-        autoPlay: false,
-      ),
+    Future.delayed(Durations.medium1).then(
+      (value) {
+        g.screenWidth = MediaQuery.of(context).size.width;
+        g.screenHeight = MediaQuery.of(context).size.height;
+        print('screen size : ${g.screenWidth} x ${g.screenHeight}');
+        checkNetworkAndDB();
+      },
     );
 
     super.initState();
   }
 
-  @override
-  void dispose() {
-    controller.dispose();
-
-    super.dispose();
-  }
-
-  void checkAndPlay() async {
-    g.sqlApp.sellectConfigs().then((value) => {
-          if (value[0].getDoExercise == 1)
-            {
-              setState(() {
-                controller.play();
-                isPlaying = true;
-              })
-            },
-        });
-  }
-
-  Future<void> initSQLConfigsDoExcerise() async {
-    g.ip = (await NetworkInfo().getWifiIP())!;
-    if (kDebugMode) {
+  Future<void> checkNetworkAndDB() async {
+    print('checkNetworkAndDB');
+    bool connectionToDB = false;
+    const String ipDB = '10.0.1.4';
+    do {
       setState(() {
-        g.ip = '192.168.1.71';
+        count++;
       });
+
+      isWiFiEnabled = await WiFiForIoTPlugin.isEnabled();
+      print('isWiFiEnabled: $isWiFiEnabled');
+      if (!isWiFiEnabled) {
+        await WiFiForIoTPlugin.setEnabled(true);
+        connectToWiFi('Office', 'Tiqn123!');
+        await Future.delayed(const Duration(seconds: 3));
+      }
+      g.ip = (await NetworkInfo().getWifiIP())!;
+      if (kDebugMode) {
+        setState(() {
+          g.ip = '10.0.1.51';
+        });
+      }
+      connectionToDB = await checkConnectionToDB(ipDB);
+      await Future.delayed(const Duration(seconds: 1));
+    } while (!connectionToDB && count <= 3);
+    if (count > 3) {
+      setState(() {
+        textLoading =
+            "Có lỗi xảy ra ! Bấm phím BACK trên điều khiển từ xa để tắt ứng dụng & mở lại !";
+      });
+
+      return;
     }
+    print('g.ip : ${g.ip} ');
     isConnectedSqlAppTiqn = await g.sqlApp.initConnection();
-    isLoading = false;
     if (isConnectedSqlAppTiqn) {
       g.configs = await g.sqlApp.sellectConfigs();
       for (var element in g.configs) {
@@ -111,84 +91,88 @@ class _InitialPgaeState extends State<InitialPgae> {
         }
       }
       setState(() {
-        isLoading = false;
         textLoading = '';
-        exceriseBegin = DateTime.parse("${g.todayString} " "07:45:00");
-        print('exceriseBegin :$exceriseBegin');
-        if (g.config.getDoExercise == 0 ||
-            DateTime.now().isAfter(exceriseBegin)) {
-          Future.delayed(const Duration(milliseconds: 200)).then((val) {
-            loadDataGoToNextPage();
-            return;
-          });
-        } else {
-          showVideo = true;
-          Timer.periodic(const Duration(milliseconds: 200), (timer) {
-            if (!isPlaying && playerIsReady) checkAndPlay();
-            if (isPlaying) {
-              timer.cancel();
-            }
-          });
-        }
-      });
-    } else {
-      Future.delayed(const Duration(seconds: 10), () {
-        setState(() {
-          textLoading =
-              "Có lỗi xảy ra ! Bấm phím BACK trên điều khiển từ xa để tắt ứng dụng & mở lại !";
+        Future.delayed(const Duration(milliseconds: 200)).then((val) {
+          loadDataGoToNextPage();
+          return;
         });
       });
+    } else {
+      setState(() {
+        textLoading =
+            "Có lỗi xảy ra ! Bấm phím BACK trên điều khiển từ xa để tắt ứng dụng & mở lại !";
+      });
     }
+  }
+
+  Future<bool> checkConnectionToDB(String ipDB) async {
+    bool connectionToDB = false;
+    const int port = 1433;
+    try {
+      await Socket.connect(ipDB, port, timeout: const Duration(seconds: 3))
+          .then((socket) {
+        // do what need to be done
+        print('Connection to : $ipDB:$port OK');
+        connectionToDB = true;
+        // Don't forget to close socket
+        socket.destroy();
+      });
+    } catch (e) {
+      print('checkConnectionToDB exception: $e');
+    }
+
+    return connectionToDB;
+  }
+
+  void connectToWiFi(String ssid, String password) async {
+    await WiFiForIoTPlugin.connect(
+      ssid,
+      password: password,
+      security: NetworkSecurity.WPA,
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          showVideo
-              ? YoutubePlayer(
-                  controller: controller,
-                  showVideoProgressIndicator: true,
-                  progressIndicatorColor: Colors.amber,
-                  progressColors: const ProgressBarColors(
-                    playedColor: Colors.amber,
-                    handleColor: Colors.tealAccent,
-                  ),
-                  onReady: () {
-                    print('Player is ready.');
-                    if (DateTime.now().isAfter(exceriseBegin)) {
-                      loadDataGoToNextPage();
-                    } else {
-                      setState(() {
-                        playerIsReady = true;
-                      });
-                    }
-                  },
-                  onEnded: (metaData) {
-                    setState(() {
-                      isPlayed = true;
-                    });
-                    loadDataGoToNextPage();
-                  },
-                )
-              : Container(),
-          isLoading ? MyFuntions.showLoading() : Container(),
-        ],
-      ),
-    );
+        body: Container(
+            alignment: Alignment.center,
+            color: count <= 3 ? Colors.white : Colors.black26,
+            width: g.screenWidth,
+            height: g.screenHeight,
+            child: SizedBox(
+              // width: 100,
+              height: count > 3 ? 500 : 250,
+              child: count > 3
+                  ? Column(
+                      children: [
+                        SizedBox(
+                          width: 200,
+                          child: Image.asset('assets/remotetv.png'),
+                        ),
+                        Text(
+                          textLoading,
+                          style: const TextStyle(fontSize: 22, color: Colors.yellow),
+                        )
+                      ],
+                    )
+                  : Column(children: [
+                      SizedBox(
+                          width: 200, child: Image.asset('assets/logo.png')),
+                      SizedBox(
+                          width: 150, child: Image.asset('assets/loading.gif')),
+                    ]),
+            )));
   }
 
   Future<void> loadDataGoToNextPage() async {
-    setState(() {
-      isLoading = true;
-    });
-
     String appBarTitle = '';
     await g.sqlProductionDB.initConnection();
-    await g.sqlEtsDB.initConnection();
-    print('g.ip : ${g.ip} ');
-
     switch (g.config.getSection) {
       case 'line1':
       case 'line2':
@@ -216,19 +200,18 @@ class _InitialPgaeState extends State<InitialPgae> {
             g.currentMo = g.config.getEtsMO;
             await MyFuntions.sellectDataETS(g.currentMo);
           }
-          if (g.config.getAnnouncementOnly == 1) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => const Announcement()),
-            );
-            break;
-          }
+
           if (isShowDataInline) {
-            g.sqlT50InspectionDataDailys = await g.sqlProductionDB
-                .selectSqlT50InspectionData(
-                    g.currentLine, g.rangeDays, g.timeTypes[0], 0);
-            MyFuntions.selectTInlineData()
-                .then((value) => goToDashboardDataInline());
+            bool loaded = false;
+            do {
+              print('*********0000000000000000000000*******loaded: $loaded');
+              loaded = await MyFuntions.selectTInlineData();
+            } while (!loaded);
+            print('*********111111111111*******loaded: $loaded');
+            goToDashboardDataInline();
+            // g.sqlT50InspectionDataDailys = await g.sqlProductionDB
+            //     .selectSqlT50InspectionData(
+            //         g.currentLine, g.rangeDays, g.timeTypes[0], 0);
           } else {
             MyFuntions.selectT50InspectionDataOneByOne(0)
                 .then((value) => goDashboardProductionNew()); //no summary
@@ -260,30 +243,6 @@ class _InitialPgaeState extends State<InitialPgae> {
           MyFuntions.selectT50InspectionDataOneByOne(0)
               .then((value) => goDashboardProductionNew()); // no summary
         }
-        break;
-      case 'lineControl3':
-        {
-          // ETS
-          var section = g.configs
-              .where((element) => element.getEtsMO != 'no')
-              .first
-              .getSection;
-
-          for (var element in g.configs) {
-            if (element.getEtsMO != 'no') {
-              g.lineETS.add(int.parse(section.split('line').last));
-              g.etsMOs.add(element.getEtsMO);
-            }
-          }
-          g.currentMo = g.etsMOs.first;
-          g.currentLine = g.lineETS.first;
-          await MyFuntions.sellectDataETS(g.currentMo);
-          g.isTVControl = true;
-          g.isTVLine = false;
-          g.autochangeLine = true;
-          goDashboardETS();
-        }
-
         break;
       case 'preparation1':
         {
@@ -322,22 +281,10 @@ class _InitialPgaeState extends State<InitialPgae> {
           goToPreparation();
         }
         break;
-      case 'preparation3':
-        {
-          g.title = 'DISPATCH TO SEWING LINE PLAN';
-          g.pDispatchs = await g.sqlApp.sellectPDispatch();
-          goToPreparation();
-        }
-        break;
+
       case 'sample':
         {
           appBarTitle = 'SAMPLE PLANNING';
-          goToDashboardImage(appBarTitle, imgLinkOrg);
-        }
-        break;
-      case 'qc':
-        {
-          appBarTitle = 'QC';
           goToDashboardImage(appBarTitle, imgLinkOrg);
         }
         break;
@@ -352,7 +299,8 @@ class _InitialPgaeState extends State<InitialPgae> {
             // Loader.hide();
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => const DashboardPlanning()),
+              MaterialPageRoute(
+                  builder: (context) => const DashboardPlanning()),
             );
           }
         }
@@ -361,7 +309,6 @@ class _InitialPgaeState extends State<InitialPgae> {
           // control1 summary
           g.currentLine = 0;
           g.autochangeLine = false;
-
           g.isTVLine = false;
           g.isTVControl = true;
           g.selectAllLine = true;
@@ -402,15 +349,6 @@ class _InitialPgaeState extends State<InitialPgae> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => const DashboardDataInline()),
-    );
-  }
-
-  void goDashboardETS() async {
-    print("------------------> goDashboardETS");
-    await MyFuntions.sellectDataETS(g.currentMo);
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => const DashboardETS()),
     );
   }
 }
