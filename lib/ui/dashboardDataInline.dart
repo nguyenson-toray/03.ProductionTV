@@ -63,21 +63,21 @@ class _DashboardDataInlineState extends State<DashboardDataInline> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(children: [
-                Column(
-                  children: [
-                    Text(
-                      'Số lượng ĐẠT, LỖI, TỈ LỆ LỖI ngày ${DateFormat.Md('vi').format(lastDay)} theo công đoạn',
-                      style: titleStyle,
-                    ),
-                    SizedBox(
-                      width: widgetAW,
-                      height: widgetABH / 3 - 20,
-                      child: InspectionInLineDataChart
-                          .createChartSummayByProcessLastDay(
-                              g.sqlT58InlineDataLastDay),
-                    ),
-                  ],
-                ),
+                // Column(
+                //   children: [
+                //     Text(
+                //       'Số lượng ĐẠT, LỖI, TỈ LỆ LỖI ngày ${DateFormat.Md('vi').format(lastDay)} theo công đoạn',
+                //       style: titleStyle,
+                //     ),
+                //     SizedBox(
+                //       width: widgetAW,
+                //       height: widgetABH / 3 - 20,
+                //       child: InspectionInLineDataChart
+                //           .createChartSummayByProcessLastDay(
+                //               g.sqlT58InlineDataLastDay),
+                //     ),
+                //   ],
+                // ),
                 Column(
                   children: [
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -93,19 +93,21 @@ class _DashboardDataInlineState extends State<DashboardDataInline> {
                       )
                     ]),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         SizedBox(
-                          width: widgetBW / 2 + 100,
+                          width: widgetAW - 60,
+                          height: widgetABH / 3 - 50,
+                          child: tableComment(),
+                        ),
+                        SizedBox(
+                          width: widgetBW + 75,
                           height: widgetABH / 3 - 20,
                           child: InspectionInLineDataChart
                               .createChartDailyQtyPassNgRatio(
                                   dataDetailByProcess),
                         ),
-                        SizedBox(
-                          width: widgetBW / 2 - 100,
-                          height: widgetABH / 3 - 50,
-                          child: tableComment(),
-                        )
                       ],
                     ),
                   ],
@@ -152,27 +154,42 @@ class _DashboardDataInlineState extends State<DashboardDataInline> {
                     ],
                   ),
                   Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+                      Text(
+                        'Số lượng ĐẠT, LỖI, TỈ LỆ LỖI ngày ${DateFormat.Md('vi').format(lastDay)} theo công đoạn',
+                        style: titleStyle,
+                      ),
                       SizedBox(
-                        child: Center(
-                            child: Text('Chi tiết lỗi', style: titleStyle)),
-                      ),
-                      Container(
-                        color: Colors.white,
                         width: widgetBW + 75,
-                        height: widgetABH / 3 - 11,
-                        child: tableGroup1(),
+                        height: (widgetABH / 3 - 11) * 2,
+                        child: InspectionInLineDataChart
+                            .createChartSummayByProcessLastDay(
+                                g.sqlT58InlineDataLastDay),
                       ),
-                      Container(
-                        color: Colors.white,
-                        width: widgetBW + 75,
-                        height: widgetABH / 3 - 11,
-                        child: tableGroup2(),
-                      )
                     ],
-                  )
+                  ),
+                  // Column(
+                  //   mainAxisAlignment: MainAxisAlignment.start,
+                  //   crossAxisAlignment: CrossAxisAlignment.center,
+                  //   children: [
+                  //     SizedBox(
+                  //       child: Center(
+                  //           child: Text('Chi tiết lỗi', style: titleStyle)),
+                  //     ),
+                  //     Container(
+                  //       color: Colors.white,
+                  //       width: widgetBW + 75,
+                  //       height: widgetABH / 3 - 11,
+                  //       child: tableGroup1(),
+                  //     ),
+                  //     Container(
+                  //       color: Colors.white,
+                  //       width: widgetBW + 75,
+                  //       height: widgetABH / 3 - 11,
+                  //       child: tableGroup2(),
+                  //     )
+                  //   ],
+                  // )
                 ],
               )
             ],

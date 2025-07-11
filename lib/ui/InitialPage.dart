@@ -157,7 +157,8 @@ class _InitialPgaeState extends State<InitialPgae> {
                         ),
                         Text(
                           textLoading,
-                          style: const TextStyle(fontSize: 22, color: Colors.yellow),
+                          style: const TextStyle(
+                              fontSize: 22, color: Colors.yellow),
                         )
                       ],
                     )
@@ -186,6 +187,9 @@ class _InitialPgaeState extends State<InitialPgae> {
       case 'line10':
       case 'line11':
       case 'line12':
+      case 'line13':
+      case 'line14':
+      case 'line15':
         {
           print('-------line--------');
 
